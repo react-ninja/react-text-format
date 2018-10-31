@@ -3,10 +3,17 @@ import React, { Component } from 'react';
 import ReactTextFormat from 'react-text-format';
 
 export default class App extends Component {
+  customImageDecorator = (url, key) => {
+    return <img src={url} className="customImageStyle" />;
+  };
+
   render() {
     return (
       <div>
-        <ReactTextFormat>
+        <ReactTextFormat
+          allowedFormats={['URL', 'Phone', 'Email', 'Image']}
+          ImageDecorator={this.customImageDecorator}
+        >
           tdyfgyubjnn oh hohklhlkhhljh http://www.google.com http://msn.com
           brokerr
           <br />
@@ -14,6 +21,7 @@ export default class App extends Component {
           <span data-email="email@span.com">jago@yahoo.com</span>
           admin@yahoo.com
           <br />
+          https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
           <br />
           &nbsp; http://jsfiddle.net/b1mjovwq/4/
           <br />

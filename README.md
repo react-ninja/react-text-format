@@ -62,7 +62,7 @@ The allowedFormats attribute specifies the allowed formats which will be allowed
 
 react-text-format allows the following formats
 
-``['URL', 'Email', 'Phone', 'CreditCard']``
+``['URL', 'Email', 'Image', 'Phone', 'CreditCard']``
 
 ```js
 import ReactTextFormat from 'react-text-format';
@@ -126,6 +126,26 @@ React.render(
   document.body
 );
 ```
+
+**ImageDecorator**
+```js
+import ReactTextFormat from 'react-text-format';
+
+customImageDecorator = (url, key) => {
+  return <img src={url} className="customImageStyle" />;
+};
+
+React.render(
+    <ReactTextFormat
+    allowedFormats={['Image']}
+    ImageDecorator={customImageDecorator}>
+        We need your feedback at reacttextformat@gmail.com.
+        https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
+    </ReactTextFormat>,
+  document.body
+);
+```
+
 
 **PhoneDecorator**
 ```js

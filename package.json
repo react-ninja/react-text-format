@@ -1,6 +1,6 @@
 {
   "name": "react-text-format",
-  "version": "0.0.88",
+  "version": "1.0.0",
   "description": "React Component to find and format links, emails, phone numbers and credit cards to required format.",
   "author": "Ahsan Bilal",
   "license": "MIT",
@@ -8,6 +8,10 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/react-ninja/react-text-format"
+  },
   "keywords": [
     "React",
     "url",

@@ -17969,14 +17969,15 @@ var MAESTROWITHDASH = '(?:(?:5[0678]\\d\\d|6304|6390|67\\d\\d)' + SEPARATOR + '[
 var MAESTRO = '(?:(?:5[0678]\\d\\d|6304|6390|67\\d\\d)\\d{8,15})';
 var CC_REGEXES = [new RegExp(AMERICANEXPRESS, 'g'), new RegExp(MASTERCARD, 'g'), new RegExp(VISA, 'g'), new RegExp(DISCOVER, 'g'), new RegExp(JCB, 'g'), new RegExp(MAESTRO, 'g'), new RegExp(MAESTROWITHDASH, 'g')];
 var PHONE_NUMBER_REGEX = new RegExp('[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}', 'gi');
-// const SPLIT_SHORTCODES_REGEX = /([^\[\]]|\[\])+/g;
+var IMAGE_REGEX = /\.(jpeg|jpg|gif|png)$/;
 var SPLIT_SHORTCODES_REGEX = /([^\[\]]|\[\])+/g;
 var ENTITY = {
   SHORTCODE_PREFIX: 'SHORTCODE:',
   URL: 'URL',
   CC: 'CreditCard',
   PHONE: 'Phone',
-  EMAIL: 'Email'
+  EMAIL: 'Email',
+  IMAGE: 'Image'
 };
 
 var MatchDecorators = function () {
@@ -17986,6 +17987,7 @@ var MatchDecorators = function () {
     classCallCheck(this, MatchDecorators);
     this.content = '';
     this.urls = [];
+    this.image = [];
     this.email = [];
     this.cc = [];
     this.phone = [];
@@ -17996,14 +17998,20 @@ var MatchDecorators = function () {
 
     this.findURLAndEmail = function () {
       var urls = linkifyIt().match(_this.content);
+      console.log(urls);
       lodash.map(urls, function (url, i) {
+        var urlType = _this.isImageURL(url.url) ? 'image:' : url.schema;
         var data = {
-          type: url.schema,
+          type: urlType,
           shortcode: '',
           url: url.url,
           title: url.raw
         };
-        switch (url.schema) {
+        switch (urlType) {
+          case 'image:':
+            data.shortcode = _this.createShortcode(ENTITY.IMAGE, _this.image.length);
+            _this.image.push(data);
+            break;
           case 'mailto:':
             data.shortcode = _this.createShortcode(ENTITY.EMAIL, _this.email.length);
             _this.email.push(data);
@@ -18013,15 +18021,6 @@ var MatchDecorators = function () {
             _this.urls.push(data);
         }
         _this.setContent(_this.content.replace(url.raw, data.shortcode));
-      });
-    };
-
-    this.updateURL = function () {
-      var urls = _this.urls;
-      lodash.map(urls, function (url, i) {
-        var urlString = '<a href="' + url.url + '">' + url.title + '</a>';
-        var shortcode = _this.createShortcode(ENTITY.URL, i);
-        _this.setContent(_this.content.replace(shortcode, urlString));
       });
     };
 
@@ -18047,6 +18046,14 @@ var MatchDecorators = function () {
       });
     };
 
+    this.isImageURL = function (url) {
+      try {
+        return url.match(IMAGE_REGEX) != null;
+      } catch (e) {
+        return false;
+      }
+    };
+
     this.splitMessage = function (content) {
       content = content.match(SPLIT_SHORTCODES_REGEX);
       if (content && content.length > 0) {
@@ -18062,10 +18069,10 @@ var MatchDecorators = function () {
         _this.findURLAndEmail();
         _this.findCreditCards();
         _this.findPhoneNumbers();
-
         return {
           content: _this.splitMessage(_this.content),
           urls: _this.urls,
+          images: _this.image,
           email: _this.email,
           cc: _this.cc,
           phone: _this.phone
@@ -18093,38 +18100,42 @@ var formatContent = function formatContent(msg) {
 
 var LinkDecorator = function LinkDecorator(decoratedHref, decoratedText, linkTarget, key) {
   return createElement(
-    "a",
+    'a',
     {
       href: decoratedHref,
       key: key,
       target: linkTarget,
-      rel: "noopener",
-      className: "rtfLink"
+      rel: 'noopener',
+      className: 'rtfLink'
     },
     decoratedText
   );
 };
 
+var ImageDecorator = function ImageDecorator(decoratedURL, key) {
+  return createElement('img', { src: decoratedURL, key: key, rel: 'noopener', className: 'rtfImage' });
+};
+
 var EmailDecorator = function EmailDecorator(decoratedHref, decoratedText, key) {
   return createElement(
-    "a",
-    { href: decoratedHref, key: key, className: "rtfEmail" },
+    'a',
+    { href: decoratedHref, key: key, className: 'rtfEmail' },
     decoratedText
   );
 };
 
 var PhoneDecorator = function PhoneDecorator(decoratedText, key) {
   return createElement(
-    "a",
-    { href: "tel:" + decoratedText, key: key, className: "rtfPhone" },
+    'a',
+    { href: 'tel:' + decoratedText, key: key, className: 'rtfPhone' },
     decoratedText
   );
 };
 
 var CreditCardDecorator = function CreditCardDecorator(decoratedText, key) {
   return createElement(
-    "span",
-    { key: key, className: "rtfCreditCard" },
+    'span',
+    { key: key, className: 'rtfCreditCard' },
     decoratedText
   );
 };
@@ -18146,7 +18157,6 @@ var ReactFormatter = function (_React$Component) {
         return string;
       }
       var matches = formatContent(string);
-      console.log('matches:::0.0.85');
       if (matches && matches.content && matches.content.length > 0) {
         var elements = lodash.map(matches.content, function (content, i) {
           if (lodash.includes(content, 'SHORTCODE:')) {
@@ -18160,6 +18170,14 @@ var ReactFormatter = function (_React$Component) {
                   return _this2.props.LinkDecorator(urlData.url, urlData.title, _this2.props.linkTarget, i);
                 }
                 return urlData.title;
+              case ENTITY.IMAGE:
+                var imageData = matches.images[index];
+                console.log(ENTITY.IMAGE);
+                console.log(_this2.props.allowedFormats);
+                if (lodash.includes(_this2.props.allowedFormats, ENTITY.IMAGE)) {
+                  return _this2.props.ImageDecorator(imageData.url, i);
+                }
+                return imageData.title;
               case ENTITY.CC:
                 var ccData = matches.cc[index];
                 if (lodash.includes(_this2.props.allowedFormats, ENTITY.CC)) {
@@ -18225,6 +18243,7 @@ ReactFormatter.defaultProps = {
   EmailDecorator: EmailDecorator,
   PhoneDecorator: PhoneDecorator,
   CreditCardDecorator: CreditCardDecorator,
+  ImageDecorator: ImageDecorator,
   matchDecorator: formatContent,
   linkTarget: '_self'
 };
