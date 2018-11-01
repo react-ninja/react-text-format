@@ -17,179 +17,137 @@ or
 npm install react-text-format --save
 ```
 
-## Usage
-
-### Basic
-
-Any link that appears inside the `ReactTextFormat` component will become clickable.
-
-```
-<ReactTextFormat>
-    Contact me via my gmail.com account
-    reacttextformat@gmail.com or call me at
-    123.456.7890
-</ReactTextFormat>
-```
-
-### Advanced
-
-If you're feeling lazy, you can wrap `ReactTextFormat` around anywhere that you want links to become clickable. Even with nested elements, it traverses the tree to find links.
-
-```
-<ReactTextFormat>
-  <div>Visit our site http://reactninja.com</div>
-    <div>React component to parse links urls, emails, credit cards,
-    phone in text into required format</div>
-    <footer>Shoot Us a message at : reacttextformat@gmail.com</footer>
-</ReactTextFormat>
-```
-
-##### Renders to:
-
-Visit our site [reactninja.com](http://www.reactninja.com)
-
-React component to parse links urls, emails, credit cards, phone in text into required format
-
-Shoot Us a message at [reacttextformat@gmail.com](mailto:reacttextformat@gmail.com)
-
-
 ## Props
 
-**allowedFormats** (Array)
-The allowedFormats attribute specifies the allowed formats which will be allowed to format through react-text-format. Default prop values of allowedFormats are
+|Name  | Type  | Default  |
+|---|---|---|
+|allowedFormats| Array ``['URL', 'Email', 'Image', 'Phone', 'CreditCard']``| ``['URL', 'Email', 'Phone']`` |
+|linkTarget| String (_blank \| _self \| _parent \| _top \| framename)  |  ``_self`` |
+|LinkDecorator| React.Node (decoratedHref: string, decoratedText: string, linkTarget: string, key: number) | Output Format: ``<a href="{URL}" target="{target}" rel='noopener' className='rtfLink'> <URL> </a>``  
+|EmailDecorator| React.Node (decoratedHref: string, decoratedText: string,key: number)  | Output Format:``<a href="mailto: {EMAIL ADDRESS}" className='rtfEmail'> {EMAIL ADDRESS} </a>``  |
+|PhoneDecorator| React.Node (decoratedText: string, key: number)  | Output Format``<a href="tel:{PHONE NUMBER}" className='rtfEmail'> {PHONE NUMBER} </a>``  |
+|CreditCardDecorator| React.Node (decoratedText: string, key: number)  | Output Format: ``<span className='rtfCreditCard'> {CREDIT CARD NUMBER} </span>``  |
+|ImageDecorator| React.Node (decoratedURL: string, key: number)  | Output Format: ``<img src="{URL OF IMAGE}" rel='noopener' className='rtfImage' />``  |
 
-``['URL', 'Email', 'Phone']``
+## Usage
 
-react-text-format allows the following formats
-
-``['URL', 'Email', 'Image', 'Phone', 'CreditCard']``
-
+### Basic Implementation
 ```js
 import ReactTextFormat from 'react-text-format';
 
 React.render(
-    <ReactTextFormat allowedFormats={['URL', 'Phone']}>
-        We need your feedback at http://www.google.com.
+    <ReactTextFormat>
+      This is demo link http://www.google.com
+      <br/><br/>
+      This is demo email <span data-email="email@span.com">jago@yahoo.com</span>
+      <br /><br />
+      This is demo image https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
+      <br /><br />
+      This is demo credit Card 5555555555554444
+      <br /><br />
+      This is demo phone Number 123.456.7890
+      <br /><br />
+      This is an anchor <a href="http://formatter.com">http://formatter.com</a>;
     </ReactTextFormat>,
   document.body
 );
 ```
+###### Output:
+![Generated Avatar](https://image.ibb.co/fEgvXf/basic-implementation.png)  
 
 
-**LinkTarget** (string)
-The LinkTarget attribute specifies where to open the linked document (_blank|_self|_parent|_top|framename)
-
-**LinkDecorator**
-You can create your own decorator for links and define that as a prop. ReactTextFormat will find the links and will render the links in defined format.
-
+### Advance Implementation
 ```js
 import ReactTextFormat from 'react-text-format';
 
-customLinkDecorator = (href, text, linkTarget, key) => {
+customLinkDecorator = (
+    decoratedHref: string,
+    decoratedText: string,
+    linkTarget: string,
+    key: number
+  ): React.Node => {
     return (
       <a
-        href={href}
+        href={decoratedHref}
         key={key}
         target={linkTarget}
-        rel="noopener"
-        className="customLinkStyle"
+        rel='noopener'
+        className='customLink'
       >
-        {text}
+        {decoratedText}
       </a>
-    );
-  };
+    )
+  }
 
-React.render(
-  <ReactTextFormat LinkDecorator={customLinkDecorator}>
-    We need your feedback at reacttextformat@gmail.com.
-  </ReactTextFormat>,
-  document.body
-);
-```
-
-**EmailDecorator**
-```js
-import ReactTextFormat from 'react-text-format';
-
-customEmailDecorator = (href, text, key) => {
+customImageDecorator = (
+    decoratedURL: string,
+    key: number
+    ): React.Node => {
     return (
-      <a href={href} key={key} className="customEmailStyle">
-        {text}
+      <div>
+        <img src={decoratedURL} key={key} rel='noopener' width="100" className='customImage' />
+      </div>
+)
+}
+
+customEmailDecorator = (
+    decoratedHref: string,
+    decoratedText: string,
+    key: number
+    ): React.Node => {
+    return (
+      <a href={decoratedHref} key={key} className='customEmail'>
+        {decoratedText}
       </a>
-    );
-};
+    )
+}
 
-React.render(
-    <ReactTextFormat EmailDecorator={customEmailDecorator}>
-        We need your feedback at reacttextformat@gmail.com.
-    </ReactTextFormat>,
-  document.body
-);
-```
+customPhoneDecorator = (
+    decoratedText: string,
+    key: number
+    ): React.Node => {
+    return (
+      <a href={`tel:${decoratedText}`} key={key} className='customPhone'>
+        {decoratedText}
+      </a>
+    )
+}
 
-**ImageDecorator**
-```js
-import ReactTextFormat from 'react-text-format';
-
-customImageDecorator = (url, key) => {
-  return <img src={url} className="customImageStyle" />;
-};
+customCreditCardDecorator = (
+    decoratedText: string,
+    key: number
+    ): React.Node => {
+    return (
+      <i key={key} className='customCreditCard'>
+        <b>{decoratedText}</b>
+      </i>
+    )
+}
 
 React.render(
     <ReactTextFormat
-    allowedFormats={['Image']}
-    ImageDecorator={customImageDecorator}>
-        We need your feedback at reacttextformat@gmail.com.
-        https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
-    </ReactTextFormat>,
-  document.body
+          allowedFormats={['URL', 'Email', 'Image', 'Phone', 'CreditCard']}
+          LinkDecorator={customLinkDecorator}
+          EmailDecorator={customEmailDecorator}
+          PhoneDecorator={customPhoneDecorator}
+          CreditCardDecorator={customCreditCardDecorator}
+          ImageDecorator={customImageDecorator}
+          >
+            This is demo link http://www.google.com
+            <br/><br/>
+            This is demo email <span data-email="email@span.com">jago@yahoo.com</span>
+            <br /><br />
+            This is demo image https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
+            <br /><br />
+            This is demo credit Card 4111111111111111
+            <br /><br />
+            This is demo phone Number 123.456.7890
+            <br /><br />
+            This is an anchor <a href="http://formatter.com">http://formatter.com</a>;
+        </ReactTextFormat>,
+        document.body
 );
 ```
 
-
-**PhoneDecorator**
-```js
-import ReactTextFormat from 'react-text-format';
-
-customPhoneDecorator = (text, key) => {
-    return (
-      <a href={`tel:${text}`} key={key} className="customPhoneStyle">
-        <i className="fa fa-phone" /> {text}
-      </a>
-    );
-};
-
-React.render(
-    <ReactTextFormat PhoneDecorator={customPhoneDecorator}>
-        We need your feedback at reacttextformat@gmail.com.
-    </ReactTextFormat>,
-  document.body
-);
-```
-
-**CreditCardDecorator**
-
-```js
-import ReactTextFormat from 'react-text-format';
-
-customCreditCardDecorator = (text, key) => {
-    return (
-      <span
-        key={key}
-        className="customCreditCardStyle"
-        onClick={() => {
-          console.log('Clicked on Credit Card Component');
-        }}
-      >
-        {text}
-      </span>
-    );
-  };
-
-React.render(
-    <ReactTextFormat CreditCardDecorator={customCreditCardDecorator}>
-        We need your feedback at reacttextformat@gmail.com.
-    </ReactTextFormat>,
-  document.body
-);
-```
+###### Output:
+![Generated Avatar](https://image.ibb.co/iiS2Cf/adv-implementation.png)  
