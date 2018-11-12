@@ -45,7 +45,12 @@ React.render(
       <br /><br />
       This is demo credit Card 5555555555554444
       <br /><br />
-      This is demo phone Number 123.456.7890
+      This is demo phone Number 123.456.7890 <br />
+      This is demo phone Number 2125551212 <br />
+      This is demo phone Number (212) 555 1212 <br />
+      This is demo phone Number (212) 555-1212 <br />
+      This is demo phone Number 212-555-1212 ext. 101 <br />
+      This is demo phone Number 212 555 1212 x101 <br />
       <br /><br />
       This is an anchor <a href="http://formatter.com">http://formatter.com</a>;
     </ReactTextFormat>,
@@ -53,8 +58,7 @@ React.render(
 );
 ```
 ###### Output:
-![Generated Avatar](https://image.ibb.co/fEgvXf/basic-implementation.png)  
-
+![Generated Avatar](https://preview.ibb.co/dPOwfA/react-text-format-basic.png)  
 
 ### Advance Implementation
 ```js
@@ -141,7 +145,12 @@ React.render(
             <br /><br />
             This is demo credit Card 4111111111111111
             <br /><br />
-            This is demo phone Number 123.456.7890
+            This is demo phone Number 123.456.7890 <br />
+            This is demo phone Number 2125551212 <br />
+            This is demo phone Number (212) 555 1212 <br />
+            This is demo phone Number (212) 555-1212 <br />
+            This is demo phone Number 212-555-1212 ext. 101 <br />
+            This is demo phone Number 212 555 1212 x101 <br />
             <br /><br />
             This is an anchor <a href="http://formatter.com">http://formatter.com</a>;
         </ReactTextFormat>,
@@ -150,4 +159,4 @@ React.render(
 ```
 
 ###### Output:
-![Generated Avatar](https://image.ibb.co/iiS2Cf/adv-implementation.png)  
+![Generated Avatar](https://image.ibb.co/fTNp0A/react-text-format-advance.png)  
