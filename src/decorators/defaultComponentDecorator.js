@@ -37,7 +37,13 @@ export const ImageDecorator = (
   key: number
 ): React.Node => {
   return (
-    <img src={decoratedURL} key={key} rel='noopener' className='rtfImage' />
+    <img
+      src={decoratedURL}
+      key={key}
+      rel='noopener'
+      className='rtfImage'
+      alt={decoratedURL}
+    />
   )
 }
 

@@ -54,8 +54,6 @@ class ReactFormatter extends React.Component<Props, {}> {
               return urlData.title
             case ENTITY.IMAGE:
               const imageData = matches.images[index];
-              console.log(ENTITY.IMAGE);
-              console.log(this.props.allowedFormats);
               if (_.includes(this.props.allowedFormats, ENTITY.IMAGE)) {
                 return this.props.ImageDecorator(
                   imageData.url,

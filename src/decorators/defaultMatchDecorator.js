@@ -17,11 +17,8 @@ const CC_REGEXES = [
   new RegExp(JCB, 'g'),
   new RegExp(MAESTRO, 'g'),
   new RegExp(MAESTROWITHDASH, 'g')
-]
-const PHONE_NUMBER_REGEX = new RegExp(
-  '[+]?[(]?[0-9]{3}[)]?[-s.]?[0-9]{3}[-s.]?[0-9]{4,6}',
-  'gi'
-)
+];
+const PHONE_NUMBER_REGEX = /\(?(\d{3})\)?[- .]?(\d{3})[- .]?(\d{4})/g;
 const IMAGE_REGEX = /\.(jpeg|jpg|gif|png)$/
 const SPLIT_SHORTCODES_REGEX = /([^\[\]]|\[\])+/g
 export const ENTITY = {
@@ -50,7 +47,6 @@ class MatchDecorators {
 
   findURLAndEmail = () => {
     const urls = LinkifyIt().match(this.content)
-    console.log(urls)
     _.map(urls, (url, i) => {
       const urlType = this.isImageURL(url.url) ? 'image:' : url.schema
       const data = {

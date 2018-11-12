@@ -31,6 +31,7 @@ export default class App extends Component {
           rel="noopener"
           width="100"
           className="customImage"
+          alt={decoratedURL}
         />
       </div>
     );
@@ -82,7 +83,13 @@ export default class App extends Component {
       This is demo credit Card 5555555555554444
       <br />
       <br />
-      This is demo phone Number 123.456.7890
+
+      This is demo phone Number 123.456.7890 <br />
+      This is demo phone Number 2125551212 <br />
+      This is demo phone Number (212) 555 1212 <br />
+      This is demo phone Number (212) 555-1212 <br />
+      This is demo phone Number 212-555-1212 ext. 101 <br />
+      This is demo phone Number 212 555 1212 x101 <br />
       <br />
       <br />
       This is an anchor <a href="http://formatter.com">http://formatter.com</a>;
