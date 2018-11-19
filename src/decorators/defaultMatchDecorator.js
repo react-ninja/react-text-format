@@ -17,10 +17,11 @@ const CC_REGEXES = [
   new RegExp(JCB, 'g'),
   new RegExp(MAESTRO, 'g'),
   new RegExp(MAESTROWITHDASH, 'g')
-];
-const PHONE_NUMBER_REGEX = /\(?(\d{3})\)?[- .]?(\d{3})[- .]?(\d{4})/g;
+]
+const PHONE_NUMBER_REGEX = /\(?(\d{3})\)?[- .]?(\d{3})[- .]?(\d{4})/g
 const IMAGE_REGEX = /\.(jpeg|jpg|gif|png)$/
 const SPLIT_SHORTCODES_REGEX = /([^\[\]]|\[\])+/g
+const NUMBER_REGEX = /^\d+$/
 export const ENTITY = {
   SHORTCODE_PREFIX: 'SHORTCODE:',
   URL: 'URL',
@@ -43,6 +44,12 @@ class MatchDecorators {
   }
   setContent = (content) => {
     this.content = content
+  }
+
+  ignoreURL = (url) => {
+    const domain = _.first(url.raw.split('.'))
+    const isNumber = NUMBER_REGEX.test(domain)
+    return url.schema === '' && isNumber
   }
 
   findURLAndEmail = () => {
@@ -68,7 +75,9 @@ class MatchDecorators {
           data.shortcode = this.createShortcode(ENTITY.URL, this.urls.length)
           this.urls.push(data)
       }
-      this.setContent(this.content.replace(url.raw, data.shortcode))
+      if (!this.ignoreURL(url)) {
+        this.setContent(this.content.replace(url.raw, data.shortcode))
+      }
     })
   }
 

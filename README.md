@@ -58,7 +58,7 @@ React.render(
 );
 ```
 ###### Output:
-![Generated Avatar](https://preview.ibb.co/dPOwfA/react-text-format-basic.png)  
+![Generated Avatar](https://image.ibb.co/bWcDs0/1-0-4-basic.png)  
 
 ### Advance Implementation
 ```js
@@ -159,4 +159,4 @@ React.render(
 ```
 
 ###### Output:
-![Generated Avatar](https://image.ibb.co/fTNp0A/react-text-format-advance.png)  
+![Generated Avatar](https://image.ibb.co/hq4ts0/1-0-4-adv.png)  
