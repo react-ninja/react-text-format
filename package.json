@@ -4,14 +4,13 @@
   "description": "React Component to find and format links, emails, phone numbers and credit cards to required format.",
   "author": "Ahsan Bilal",
   "license": "MIT",
-  "repository": "",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/react-ninja/react-text-format"
   },
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
   "keywords": [
     "React",
     "url",
@@ -71,7 +70,10 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^1.6.2",
-    "rollup-plugin-url": "^1.4.0"
+    "rollup-plugin-url": "^1.4.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1"
   },
   "files": [
     "dist"
