@@ -1,5 +1,9 @@
 import LinkifyIt from 'linkify-it'
-import _ from 'lodash'
+import compact from 'lodash/compact'
+import map from 'lodash/map';
+import uniq from 'lodash/uniq';
+import first from 'lodash/first';
+import filter from 'lodash/filter';
 
 const SEPARATOR = '(-|\\s+|\\.|\\/|\\\\|\\:|,)*'
 const AMERICANEXPRESS = `((?:3[47][0-9]{2}${SEPARATOR}[0-9]{6}(-|\\s+)?[0-9]{5}))`
@@ -47,14 +51,14 @@ class MatchDecorators {
   }
 
   ignoreURL = (url) => {
-    const domain = _.first(url.raw.split('.'))
+    const domain = first(url.raw.split('.'))
     const isNumber = NUMBER_REGEX.test(domain)
     return url.schema === '' && isNumber
   }
 
   findURLAndEmail = () => {
     const urls = LinkifyIt().match(this.content)
-    _.map(urls, (url, i) => {
+    map(urls, (url, i) => {
       const urlType = this.isImageURL(url.url) ? 'image:' : url.schema
       const data = {
         type: urlType,
@@ -83,9 +87,9 @@ class MatchDecorators {
 
   findCreditCards = () => {
     let ccNums = CC_REGEXES.map((regex) => this.content.match(regex))
-    ccNums = _.compact(ccNums)
-    ccNums = _.uniq(ccNums[0])
-    _.map(ccNums, (cc, i) => {
+    ccNums = compact(ccNums)
+    ccNums = uniq(ccNums[0])
+    map(ccNums, (cc, i) => {
       const shortcode = this.createShortcode(ENTITY.CC, i)
       this.setContent(this.content.replace(cc, shortcode))
       this.cc.push(cc)
@@ -94,7 +98,7 @@ class MatchDecorators {
 
   findPhoneNumbers = () => {
     let phoneNumbers = this.content.match(PHONE_NUMBER_REGEX)
-    _.map(phoneNumbers, (phone, i) => {
+    map(phoneNumbers, (phone, i) => {
       const shortcode = this.createShortcode(ENTITY.PHONE, i)
       this.setContent(this.content.replace(phone, shortcode))
       this.phone.push(phone)
@@ -112,7 +116,7 @@ class MatchDecorators {
   splitMessage = (content) => {
     content = content.match(SPLIT_SHORTCODES_REGEX)
     if (content && content.length > 0) {
-      return _.filter(content, (val) => {
+      return filter(content, (val) => {
         return val && val !== ''
       })
     }
@@ -133,7 +137,7 @@ class MatchDecorators {
         phone: this.phone
       }
     } catch (e) {
-      console.log(e)
+      return null;
     }
   }
 }
@@ -141,7 +145,7 @@ class MatchDecorators {
 const formatContent = (msg) => {
   const formatMsg = new MatchDecorators()
   formatMsg.setContent(msg)
-  return formatMsg.annotate()
+  return formatMsg.annotate();
 }
 
 export default formatContent

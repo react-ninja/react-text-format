@@ -1,5 +1,8 @@
 import * as React from 'react'
-import _ from 'lodash'
+import map from 'lodash/map'
+import includes from 'lodash/includes'
+import hasIn from 'lodash/hasIn'
+import random from 'lodash/random'
 import defaultMatchDecorator, {
   ENTITY
 } from '../decorators/defaultMatchDecorator'
@@ -30,66 +33,81 @@ class ReactFormatter extends React.Component<Props, {}> {
   }
 
   parseString(string: string) {
-    if (string === '') {
-      return string
-    }
-    let matches = defaultMatchDecorator(string)
-    if (matches && matches.content && matches.content.length > 0) {
-      const elements = _.map(matches.content, (content, i) => {
-        if (_.includes(content, 'SHORTCODE:')) {
-          const shortcode = content.replace('SHORTCODE:', '').split(' ')
-          const shortcodeType = shortcode[0]
-          const index = parseInt(shortcode[1].replace('key=', ''))
-          switch (shortcodeType) {
-            case ENTITY.URL:
-              const urlData = matches.urls[index]
-              if (_.includes(this.props.allowedFormats, ENTITY.URL)) {
-                return this.props.LinkDecorator(
-                  urlData.url,
-                  urlData.title,
-                  this.props.linkTarget,
-                  i
-                )
-              }
-              return urlData.title
-            case ENTITY.IMAGE:
-              const imageData = matches.images[index];
-              if (_.includes(this.props.allowedFormats, ENTITY.IMAGE)) {
-                return this.props.ImageDecorator(
-                  imageData.url,
-                  i
-                )
-              }
-              return imageData.title
-            case ENTITY.CC:
-              const ccData = matches.cc[index]
-              if (_.includes(this.props.allowedFormats, ENTITY.CC)) {
-                return this.props.CreditCardDecorator(ccData, i)
-              }
-              return ccData
-            case ENTITY.PHONE:
-              const phoneData = matches.phone[index]
-              if (_.includes(this.props.allowedFormats, ENTITY.PHONE)) {
-                return this.props.PhoneDecorator(phoneData, i)
-              }
-              return phoneData
-            case ENTITY.EMAIL:
-              const emailData = matches.email[index]
-              if (_.includes(this.props.allowedFormats, ENTITY.EMAIL)) {
-                return this.props.EmailDecorator(
-                  emailData.url,
-                  emailData.title,
-                  i
-                )
-              }
-              return emailData.title
-            default:
-              return content
+    try {
+      if (string === '') {
+        throw null
+      }
+      const matches = defaultMatchDecorator(string)
+      if (matches && matches.content && matches.content.length > 0) {
+        const elements = map(matches.content, (content, i) => {
+          if (includes(content, 'SHORTCODE:')) {
+            const shortcode = content.replace('SHORTCODE:', '').split(' ')
+            const shortcodeType = shortcode[0]
+            const index = parseInt(shortcode[1].replace('key=', ''))
+            const key = `${i}${random(1, 1000000)}`
+            switch (shortcodeType) {
+              case ENTITY.URL:
+                if (hasIn(matches, ['urls', index, 'url'])) {
+                  return includes(this.props.allowedFormats, ENTITY.URL)
+                    ? this.props.LinkDecorator(
+                      matches.urls[index].url,
+                      matches.urls[index].title,
+                      this.props.linkTarget,
+                      key
+                    )
+                    : matches.urls[index].title
+                }
+                return
+              case ENTITY.IMAGE:
+                if (
+                  hasIn(matches, ['images', index, 'url']) &&
+                  includes(this.props.allowedFormats, ENTITY.IMAGE)
+                ) {
+                  return this.props.ImageDecorator(
+                    matches.images[index].url,
+                    key
+                  )
+                }
+                if (hasIn(matches, ['images', index, 'title'])) {
+                  return matches.images[index].title
+                }
+              case ENTITY.CC:
+                if (hasIn(matches, ['cc', index])) {
+                  return includes(this.props.allowedFormats, ENTITY.CC)
+                    ? this.props.CreditCardDecorator(matches.cc[index], key)
+                    : matches.cc[index]
+                }
+                return
+              case ENTITY.PHONE:
+                if (hasIn(matches, ['phone', index])) {
+                  return includes(this.props.allowedFormats, ENTITY.PHONE)
+                    ? this.props.PhoneDecorator(matches.phone[index], key)
+                    : matches.phone[index]
+                }
+                return
+              case ENTITY.EMAIL:
+                const emailData = matches.email[index]
+                if (hasIn(matches, ['email', index])) {
+                  return includes(this.props.allowedFormats, ENTITY.EMAIL)
+                    ? this.props.EmailDecorator(
+                      emailData.url,
+                      emailData.title,
+                      key
+                    )
+                    : emailData.title
+                }
+                return
+              default:
+                return content
+            }
           }
-        }
-        return content
-      })
-      return elements
+          return content
+        })
+        return elements
+      }
+      throw null
+    } catch (e) {
+      return string
     }
   }
 
@@ -103,7 +121,7 @@ class ReactFormatter extends React.Component<Props, {}> {
     ) {
       return React.cloneElement(
         children,
-        { key: key },
+        { key: random(1, 1000000) },
         this.parse(children.props.children)
       )
     } else if (Array.isArray(children)) {
