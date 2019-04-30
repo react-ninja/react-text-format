@@ -80,3 +80,14 @@ export const CreditCardDecorator = (
     </span>
   )
 }
+
+export const TermDecorator = (
+  decoratedText: string,
+  key: number
+): React.Node => {
+  return (
+    <span key={key} className='rtfTerm'>
+      {decoratedText}
+    </span>
+  )
+}

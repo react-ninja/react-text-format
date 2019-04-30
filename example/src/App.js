@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import ReactTextFormat from 'react-text-format';
+import ReactTextFormat from "react-text-format";
 
 export default class App extends Component {
   customLinkDecorator = (
     decoratedHref: string,
     decoratedText: string,
     linkTarget: string,
-    key: number,
+    key: number
   ): React.Node => {
     return (
       <a
@@ -40,7 +40,7 @@ export default class App extends Component {
   customEmailDecorator = (
     decoratedHref: string,
     decoratedText: string,
-    key: number,
+    key: number
   ): React.Node => {
     return (
       <a href={decoratedHref} key={key} className="customEmail">
@@ -59,7 +59,7 @@ export default class App extends Component {
 
   customCreditCardDecorator = (
     decoratedText: string,
-    key: number,
+    key: number
   ): React.Node => {
     return (
       <i key={key} className="customCreditCard">
@@ -68,9 +68,19 @@ export default class App extends Component {
     );
   };
 
+  customTermDecorator = (decoratedText: string, key: number): React.Node => {
+    return (
+      <b key={key} className="keyword">
+        {decoratedText}
+      </b>
+    );
+  };
+
   getContent = (): React.Node => (
     <div>
       This is demo link http://www.google.com
+      <br />
+      This is encoded Link http://go%2Emsn%2Ecom/nl/133942%2Easp
       <br />
       This is demo email <span data-email="email@span.com">jago@yahoo.com</span>
       <br />
@@ -82,10 +92,12 @@ export default class App extends Component {
       This is demo credit Card 5555555555554444
       <br />
       <br />
-      This is contact Number 2125551212.In this example, we will use this for demo.<br />
+      This is contact Number 2125551212.In this example, we will use this for
+      demo.
+      <br />
       This is demo phone Number 123.456.7890 <br />
       This is demo phone Number (212) 555 1212 <br />
-      This is demo phone Number (212) 555-1212 <br />
+      This is demo Phone Number (212) 555-1212 <br />
       This is demo phone Number 212-555-1212 ext. 101 <br />
       This is demo phone Number 212 555 1212 x101 <br />
       <br />
@@ -104,12 +116,21 @@ export default class App extends Component {
         <div>
           <h3>Advance Implementation</h3>
           <ReactTextFormat
-            allowedFormats={['URL', 'Email', 'Image', 'Phone', 'CreditCard']}
+            allowedFormats={[
+              "URL",
+              "Email",
+              "Image",
+              "Phone",
+              "CreditCard",
+              "Term"
+            ]}
             LinkDecorator={this.customLinkDecorator}
             EmailDecorator={this.customEmailDecorator}
             PhoneDecorator={this.customPhoneDecorator}
             CreditCardDecorator={this.customCreditCardDecorator}
             ImageDecorator={this.customImageDecorator}
+            Terms={["Link", "phone", "image", "Anchor", "email", "contact", "Credit"]}
+            TermDecorator={this.customTermDecorator}
           >
             {this.getContent()}
           </ReactTextFormat>

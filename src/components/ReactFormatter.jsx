@@ -11,23 +11,26 @@ import {
   EmailDecorator,
   PhoneDecorator,
   CreditCardDecorator,
-  ImageDecorator
+  ImageDecorator,
+  TermDecorator
 } from '../decorators/defaultComponentDecorator'
 
 type Props = {
   children: React.Node,
   componentDecorator: (string, string, number) => React.Node,
-  matchDecorator: (string) => Array<Object>
+  matchDecorator: string => Array<Object>
 }
 
 class ReactFormatter extends React.Component<Props, {}> {
   static defaultProps = {
-    allowedFormats: ['URL', 'Phone', 'Email'],
+    allowedFormats: ['URL', 'Phone', 'Email', 'Terms'],
+    Terms: [],
     LinkDecorator,
     EmailDecorator,
     PhoneDecorator,
     CreditCardDecorator,
     ImageDecorator,
+    TermDecorator,
     matchDecorator: defaultMatchDecorator,
     linkTarget: '_self'
   }
@@ -37,7 +40,8 @@ class ReactFormatter extends React.Component<Props, {}> {
       if (string === '') {
         throw null
       }
-      const matches = defaultMatchDecorator(string)
+      string = decodeURIComponent(string)
+      const matches = defaultMatchDecorator(string, this.props.Terms)
       if (matches && matches.content && matches.content.length > 0) {
         const elements = map(matches.content, (content, i) => {
           if (includes(content, 'SHORTCODE:')) {
@@ -83,6 +87,15 @@ class ReactFormatter extends React.Component<Props, {}> {
                   return includes(this.props.allowedFormats, ENTITY.PHONE)
                     ? this.props.PhoneDecorator(matches.phone[index], key)
                     : matches.phone[index]
+                }
+                return
+              case ENTITY.TERM:
+                if (hasIn(matches, ['terms', index])) {
+                  if (includes(this.props.allowedFormats, ENTITY.TERM)) {
+                    return this.props.TermDecorator(matches.terms[index], key)
+                  } else {
+                    return matches.terms[index]
+                  }
                 }
                 return
               case ENTITY.EMAIL:

@@ -16,6 +16,18 @@ describe('Test Anchor', () => {
     expect(wrapper.find('a.rtfLink')).to.have.lengthOf(1)
   })
 
+  it('Test Encoded URL', () => {
+    const component = (
+      <ReactTextFormat>
+        This is encoded Link
+        http://go%2Emsn%2Ecom/nl/133942%2Easp
+      </ReactTextFormat>
+    )
+
+    const wrapper = shallow(component)
+    expect(wrapper.find('a.rtfLink')).to.have.lengthOf(1)
+  })
+
   it('Test Multiple Anchor', () => {
     const component = (
       <ReactTextFormat>
@@ -125,16 +137,26 @@ describe('Test Credit Card', () => {
   it('Test Multiple  Credit Card', () => {
     const component = (
       <ReactTextFormat allowedFormats={['CreditCard']}>
-        MasterCard 5555555555554444<br/>
-        MasterCard 5105105105105100<br/>
-        Visa 4111111111111111<br/>
-        Visa 4012888888881881<br/>
-        Discover 6011111111111117<br/>
-        Discover 6011000990139424<br/>
-        JCB 3530111333300000<br/>
-        JCB 3566002020360505<br/>
-        AMEericanExpress 378282246310005<br/>
-        AMEericanExpress 371449635398431<br/>
+        MasterCard 5555555555554444
+        <br />
+        MasterCard 5105105105105100
+        <br />
+        Visa 4111111111111111
+        <br />
+        Visa 4012888888881881
+        <br />
+        Discover 6011111111111117
+        <br />
+        Discover 6011000990139424
+        <br />
+        JCB 3530111333300000
+        <br />
+        JCB 3566002020360505
+        <br />
+        AMEericanExpress 378282246310005
+        <br />
+        AMEericanExpress 371449635398431
+        <br />
         <br />
       </ReactTextFormat>
     )

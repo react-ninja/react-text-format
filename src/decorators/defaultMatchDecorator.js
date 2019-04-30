@@ -1,9 +1,12 @@
 import LinkifyIt from 'linkify-it'
 import compact from 'lodash/compact'
-import map from 'lodash/map';
-import uniq from 'lodash/uniq';
-import first from 'lodash/first';
-import filter from 'lodash/filter';
+import map from 'lodash/map'
+import each from 'lodash/each'
+import uniq from 'lodash/uniq'
+import first from 'lodash/first'
+import filter from 'lodash/filter'
+import includes from 'lodash/includes'
+import toLower from 'lodash/toLower'
 
 const SEPARATOR = '(-|\\s+|\\.|\\/|\\\\|\\:|,)*'
 const AMERICANEXPRESS = `((?:3[47][0-9]{2}${SEPARATOR}[0-9]{6}(-|\\s+)?[0-9]{5}))`
@@ -32,7 +35,8 @@ export const ENTITY = {
   CC: 'CreditCard',
   PHONE: 'Phone',
   EMAIL: 'Email',
-  IMAGE: 'Image'
+  IMAGE: 'Image',
+  TERM: 'Term'
 }
 
 class MatchDecorators {
@@ -42,15 +46,24 @@ class MatchDecorators {
   email = []
   cc = []
   phone = []
+  terms = []
+  termKeywords = []
 
   createShortcode(entity, id) {
     return `[${ENTITY.SHORTCODE_PREFIX}${entity} key=${id}]`
   }
-  setContent = (content) => {
+
+  setContent = content => {
     this.content = content
   }
 
-  ignoreURL = (url) => {
+  setTerms = terms => {
+    if (Array.isArray(terms)) {
+      this.termKeywords = terms
+    }
+  }
+
+  ignoreURL = url => {
     const domain = first(url.raw.split('.'))
     const isNumber = NUMBER_REGEX.test(domain)
     return url.schema === '' && isNumber
@@ -86,7 +99,7 @@ class MatchDecorators {
   }
 
   findCreditCards = () => {
-    let ccNums = CC_REGEXES.map((regex) => this.content.match(regex))
+    let ccNums = CC_REGEXES.map(regex => this.content.match(regex))
     ccNums = compact(ccNums)
     ccNums = uniq(ccNums[0])
     map(ccNums, (cc, i) => {
@@ -105,7 +118,23 @@ class MatchDecorators {
     })
   }
 
-  isImageURL = (url) => {
+  findTerms = () => {
+    if (this.termKeywords.length > 0) {
+      let termKeywords = []
+      each(this.termKeywords, term => {
+        const regex = new RegExp(term, 'i')
+        const match = this.content.match(regex)
+        if (match) {
+          const matchedTerm = match[0]
+          const shortcode = this.createShortcode(ENTITY.TERM, this.terms.length)
+          this.setContent(this.content.replace(matchedTerm, shortcode))
+          this.terms.push(matchedTerm)
+        }
+      })
+    }
+  }
+
+  isImageURL = url => {
     try {
       return url.match(IMAGE_REGEX) != null
     } catch (e) {
@@ -113,10 +142,10 @@ class MatchDecorators {
     }
   }
 
-  splitMessage = (content) => {
+  splitMessage = content => {
     content = content.match(SPLIT_SHORTCODES_REGEX)
     if (content && content.length > 0) {
-      return filter(content, (val) => {
+      return filter(content, val => {
         return val && val !== ''
       })
     }
@@ -128,24 +157,27 @@ class MatchDecorators {
       this.findURLAndEmail()
       this.findCreditCards()
       this.findPhoneNumbers()
+      this.findTerms()
       return {
         content: this.splitMessage(this.content),
         urls: this.urls,
         images: this.image,
         email: this.email,
         cc: this.cc,
-        phone: this.phone
+        phone: this.phone,
+        terms: this.terms
       }
     } catch (e) {
-      return null;
+      return null
     }
   }
 }
 
-const formatContent = (msg) => {
+const formatContent = (msg, terms) => {
   const formatMsg = new MatchDecorators()
   formatMsg.setContent(msg)
-  return formatMsg.annotate();
+  formatMsg.setTerms(terms)
+  return formatMsg.annotate()
 }
 
 export default formatContent
