@@ -47,7 +47,6 @@ React.render(
       <br /><br />
       This is demo credit Card 5555555555554444
       <br /><br />
-      This is contact Number 2125551212.In this example, we will use this for demo.<br />
       This is demo phone Number 123.456.7890 <br />
       This is demo phone Number (212) 555 1212 <br />
       This is demo phone Number (212) 555-1212 <br />
@@ -146,7 +145,7 @@ React.render(
           PhoneDecorator={customPhoneDecorator}
           CreditCardDecorator={customCreditCardDecorator}
           ImageDecorator={customImageDecorator}
-          Terms={["Link", "phone", "image", "Anchor", "email", "contact", "Credit"]}
+          Terms={["Link", "phone", "image", "Anchor", "email", "Credit"]}
           TermDecorator={customTermDecorator}
           >
             This is demo link http://www.google.com
@@ -157,9 +156,8 @@ React.render(
             <br /><br />
             This is demo image https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
             <br /><br />
-            This is demo credit Card 4111111111111111
+            This is demo credit Card 5555555555554444
             <br /><br />
-            This is contact Number 2125551212.In this example, we will use this for demo.<br />
             This is demo phone Number 123.456.7890 <br />
             This is demo phone Number (212) 555 1212 <br />
             This is demo Phone Number (212) 555-1212 <br />

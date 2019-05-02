@@ -92,9 +92,6 @@ export default class App extends Component {
       This is demo credit Card 5555555555554444
       <br />
       <br />
-      This is contact Number 2125551212.In this example, we will use this for
-      demo.
-      <br />
       This is demo phone Number 123.456.7890 <br />
       This is demo phone Number (212) 555 1212 <br />
       This is demo Phone Number (212) 555-1212 <br />
