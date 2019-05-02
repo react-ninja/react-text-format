@@ -23,11 +23,13 @@ npm install react-text-format --save
 |---|---|---|
 |allowedFormats| Array ``['URL', 'Email', 'Image', 'Phone', 'CreditCard']``| ``['URL', 'Email', 'Phone']`` |
 |linkTarget| String (_blank \| _self \| _parent \| _top \| framename)  |  ``_self`` |
+|Terms| Array of strings  |  [] |
 |LinkDecorator| React.Node (decoratedHref: string, decoratedText: string, linkTarget: string, key: number) | Output Format: ``<a href="{URL}" target="{target}" rel='noopener' className='rtfLink'> <URL> </a>``  
 |EmailDecorator| React.Node (decoratedHref: string, decoratedText: string,key: number)  | Output Format:``<a href="mailto: {EMAIL ADDRESS}" className='rtfEmail'> {EMAIL ADDRESS} </a>``  |
 |PhoneDecorator| React.Node (decoratedText: string, key: number)  | Output Format``<a href="tel:{PHONE NUMBER}" className='rtfEmail'> {PHONE NUMBER} </a>``  |
 |CreditCardDecorator| React.Node (decoratedText: string, key: number)  | Output Format: ``<span className='rtfCreditCard'> {CREDIT CARD NUMBER} </span>``  |
 |ImageDecorator| React.Node (decoratedURL: string, key: number)  | Output Format: ``<img src="{URL OF IMAGE}" rel='noopener' className='rtfImage' />``  |
+|TermDecorator| React.Node (decoratedText: string, key: number)  | Output Format: ``<span key={key} className='rtfTerm'>{decoratedText}</span>``  |
 
 ## Usage
 
@@ -128,6 +130,14 @@ customCreditCardDecorator = (
     )
 }
 
+customTermDecorator = (decoratedText: string, key: number): React.Node => {
+  return (
+    <b key={key} className="keyword">
+      {decoratedText}
+    </b>
+  );
+};
+
 React.render(
     <ReactTextFormat
           allowedFormats={['URL', 'Email', 'Image', 'Phone', 'CreditCard']}
@@ -136,9 +146,13 @@ React.render(
           PhoneDecorator={customPhoneDecorator}
           CreditCardDecorator={customCreditCardDecorator}
           ImageDecorator={customImageDecorator}
+          Terms={["Link", "phone", "image", "Anchor", "email", "contact", "Credit"]}
+          TermDecorator={customTermDecorator}
           >
             This is demo link http://www.google.com
             <br/><br/>
+            This is encoded Link http://go%2Emsn%2Ecom/nl/133942%2Easp
+            <br />
             This is demo email <span data-email="email@span.com">jago@yahoo.com</span>
             <br /><br />
             This is demo image https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
@@ -148,7 +162,7 @@ React.render(
             This is contact Number 2125551212.In this example, we will use this for demo.<br />
             This is demo phone Number 123.456.7890 <br />
             This is demo phone Number (212) 555 1212 <br />
-            This is demo phone Number (212) 555-1212 <br />
+            This is demo Phone Number (212) 555-1212 <br />
             This is demo phone Number 212-555-1212 ext. 101 <br />
             This is demo phone Number 212 555 1212 x101 <br />
             <br /><br />
@@ -159,4 +173,4 @@ React.render(
 ```
 
 ###### Output:
-![Generated Avatar](https://image.ibb.co/hq4ts0/1-0-4-adv.png)  
+![Generated Avatar](https://i.ibb.co/pZ5BHn2/advance-react-text-format.png)  
