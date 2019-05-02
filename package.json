@@ -1,6 +1,6 @@
 {
   "name": "react-text-format",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "React Component to find and format links, emails, phone numbers and credit cards to required format.",
   "author": "Ahsan Bilal",
   "license": "MIT",
