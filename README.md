@@ -171,4 +171,4 @@ React.render(
 ```
 
 ###### Output:
-![Generated Avatar](https://i.ibb.co/pZ5BHn2/advance-react-text-format.png)  
+![Generated Avatar](https://i.ibb.co/r67P3JC/advance-react-text-format.png)  
