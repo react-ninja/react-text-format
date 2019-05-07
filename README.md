@@ -23,13 +23,13 @@ npm install react-text-format --save
 |---|---|---|
 |allowedFormats| Array ``['URL', 'Email', 'Image', 'Phone', 'CreditCard']``| ``['URL', 'Email', 'Phone']`` |
 |linkTarget| String (_blank \| _self \| _parent \| _top \| framename)  |  ``_self`` |
-|Terms| Array of strings  |  [] |
-|LinkDecorator| React.Node (decoratedHref: string, decoratedText: string, linkTarget: string, key: number) | Output Format: ``<a href="{URL}" target="{target}" rel='noopener' className='rtfLink'> <URL> </a>``  
-|EmailDecorator| React.Node (decoratedHref: string, decoratedText: string,key: number)  | Output Format:``<a href="mailto: {EMAIL ADDRESS}" className='rtfEmail'> {EMAIL ADDRESS} </a>``  |
-|PhoneDecorator| React.Node (decoratedText: string, key: number)  | Output Format``<a href="tel:{PHONE NUMBER}" className='rtfEmail'> {PHONE NUMBER} </a>``  |
-|CreditCardDecorator| React.Node (decoratedText: string, key: number)  | Output Format: ``<span className='rtfCreditCard'> {CREDIT CARD NUMBER} </span>``  |
-|ImageDecorator| React.Node (decoratedURL: string, key: number)  | Output Format: ``<img src="{URL OF IMAGE}" rel='noopener' className='rtfImage' />``  |
-|TermDecorator| React.Node (decoratedText: string, key: number)  | Output Format: ``<span key={key} className='rtfTerm'>{decoratedText}</span>``  |
+|terms| Array of strings  |  [] |
+|linkDecorator| React.Node (decoratedHref: string, decoratedText: string, linkTarget: string, key: number) | Output Format: ``<a href="{URL}" target="{target}" rel='noopener' className='rtfLink'> <URL> </a>``  
+|emailDecorator| React.Node (decoratedHref: string, decoratedText: string,key: number)  | Output Format:``<a href="mailto: {EMAIL ADDRESS}" className='rtfEmail'> {EMAIL ADDRESS} </a>``  |
+|phoneDecorator| React.Node (decoratedText: string, key: number)  | Output Format``<a href="tel:{PHONE NUMBER}" className='rtfEmail'> {PHONE NUMBER} </a>``  |
+|creditCardDecorator| React.Node (decoratedText: string, key: number)  | Output Format: ``<span className='rtfCreditCard'> {CREDIT CARD NUMBER} </span>``  |
+|imageDecorator| React.Node (decoratedURL: string, key: number)  | Output Format: ``<img src="{URL OF IMAGE}" rel='noopener' className='rtfImage' />``  |
+|termDecorator| React.Node (decoratedText: string, key: number)  | Output Format: ``<span key={key} className='rtfTerm'>{decoratedText}</span>``  |
 
 ## Usage
 
@@ -140,13 +140,13 @@ customTermDecorator = (decoratedText: string, key: number): React.Node => {
 React.render(
     <ReactTextFormat
           allowedFormats={['URL', 'Email', 'Image', 'Phone', 'CreditCard']}
-          LinkDecorator={customLinkDecorator}
-          EmailDecorator={customEmailDecorator}
-          PhoneDecorator={customPhoneDecorator}
-          CreditCardDecorator={customCreditCardDecorator}
-          ImageDecorator={customImageDecorator}
-          Terms={["Link", "phone", "image", "Anchor", "email", "Credit"]}
-          TermDecorator={customTermDecorator}
+          linkDecorator={customLinkDecorator}
+          emailDecorator={customEmailDecorator}
+          phoneDecorator={customPhoneDecorator}
+          creditCardDecorator={customCreditCardDecorator}
+          imageDecorator={customImageDecorator}
+          terms={["Link", "phone", "image", "Anchor", "email", "Credit"]}
+          termDecorator={customTermDecorator}
           >
             This is demo link http://www.google.com
             <br/><br/>
