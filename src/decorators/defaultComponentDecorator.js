@@ -13,7 +13,7 @@ export default (
   )
 }
 
-export const LinkDecorator = (
+export const linkDecorator = (
   decoratedHref: string,
   decoratedText: string,
   linkTarget: string,
@@ -32,7 +32,7 @@ export const LinkDecorator = (
   )
 }
 
-export const ImageDecorator = (
+export const imageDecorator = (
   decoratedURL: string,
   key: number
 ): React.Node => {
@@ -47,7 +47,7 @@ export const ImageDecorator = (
   )
 }
 
-export const EmailDecorator = (
+export const emailDecorator = (
   decoratedHref: string,
   decoratedText: string,
   key: number
@@ -59,7 +59,7 @@ export const EmailDecorator = (
   )
 }
 
-export const PhoneDecorator = (
+export const phoneDecorator = (
   decoratedText: string,
   key: number
 ): React.Node => {
@@ -70,7 +70,7 @@ export const PhoneDecorator = (
   )
 }
 
-export const CreditCardDecorator = (
+export const creditCardDecorator = (
   decoratedText: string,
   key: number
 ): React.Node => {
@@ -81,7 +81,7 @@ export const CreditCardDecorator = (
   )
 }
 
-export const TermDecorator = (
+export const termDecorator = (
   decoratedText: string,
   key: number
 ): React.Node => {

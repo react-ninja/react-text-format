@@ -7,31 +7,25 @@ import defaultMatchDecorator, {
   ENTITY
 } from '../decorators/defaultMatchDecorator'
 import {
-  LinkDecorator,
-  EmailDecorator,
-  PhoneDecorator,
-  CreditCardDecorator,
-  ImageDecorator,
-  TermDecorator
+  linkDecorator,
+  emailDecorator,
+  phoneDecorator,
+  creditCardDecorator,
+  imageDecorator,
+  termDecorator
 } from '../decorators/defaultComponentDecorator'
 
-type Props = {
-  children: React.Node,
-  componentDecorator: (string, string, number) => React.Node,
-  matchDecorator: string => Array<Object>
-}
 
 class ReactFormatter extends React.Component<Props, {}> {
   static defaultProps = {
     allowedFormats: ['URL', 'Phone', 'Email', 'Terms'],
-    Terms: [],
-    LinkDecorator,
-    EmailDecorator,
-    PhoneDecorator,
-    CreditCardDecorator,
-    ImageDecorator,
-    TermDecorator,
-    matchDecorator: defaultMatchDecorator,
+    terms: [],
+    linkDecorator,
+    emailDecorator,
+    phoneDecorator,
+    creditCardDecorator,
+    imageDecorator,
+    termDecorator,
     linkTarget: '_self'
   }
 
@@ -40,8 +34,18 @@ class ReactFormatter extends React.Component<Props, {}> {
       if (string === '') {
         throw null
       }
+      const {
+        terms,
+        allowedFormats,
+        linkDecorator,
+        imageDecorator,
+        creditCardDecorator,
+        phoneDecorator,
+        termDecorator,
+        emailDecorator
+      } = this.props
       string = decodeURIComponent(string)
-      const matches = defaultMatchDecorator(string, this.props.Terms)
+      const matches = defaultMatchDecorator(string, terms)
       if (matches && matches.content && matches.content.length > 0) {
         const elements = map(matches.content, (content, i) => {
           if (includes(content, 'SHORTCODE:')) {
@@ -52,8 +56,8 @@ class ReactFormatter extends React.Component<Props, {}> {
             switch (shortcodeType) {
               case ENTITY.URL:
                 if (hasIn(matches, ['urls', index, 'url'])) {
-                  return includes(this.props.allowedFormats, ENTITY.URL)
-                    ? this.props.LinkDecorator(
+                  return includes(allowedFormats, ENTITY.URL)
+                    ? linkDecorator(
                       matches.urls[index].url,
                       matches.urls[index].title,
                       this.props.linkTarget,
@@ -65,34 +69,31 @@ class ReactFormatter extends React.Component<Props, {}> {
               case ENTITY.IMAGE:
                 if (
                   hasIn(matches, ['images', index, 'url']) &&
-                  includes(this.props.allowedFormats, ENTITY.IMAGE)
+                  includes(allowedFormats, ENTITY.IMAGE)
                 ) {
-                  return this.props.ImageDecorator(
-                    matches.images[index].url,
-                    key
-                  )
+                  return imageDecorator(matches.images[index].url, key)
                 }
                 if (hasIn(matches, ['images', index, 'title'])) {
                   return matches.images[index].title
                 }
               case ENTITY.CC:
                 if (hasIn(matches, ['cc', index])) {
-                  return includes(this.props.allowedFormats, ENTITY.CC)
-                    ? this.props.CreditCardDecorator(matches.cc[index], key)
+                  return includes(allowedFormats, ENTITY.CC)
+                    ? creditCardDecorator(matches.cc[index], key)
                     : matches.cc[index]
                 }
                 return
               case ENTITY.PHONE:
                 if (hasIn(matches, ['phone', index])) {
-                  return includes(this.props.allowedFormats, ENTITY.PHONE)
-                    ? this.props.PhoneDecorator(matches.phone[index], key)
+                  return includes(allowedFormats, ENTITY.PHONE)
+                    ? phoneDecorator(matches.phone[index], key)
                     : matches.phone[index]
                 }
                 return
               case ENTITY.TERM:
                 if (hasIn(matches, ['terms', index])) {
-                  if (includes(this.props.allowedFormats, ENTITY.TERM)) {
-                    return this.props.TermDecorator(matches.terms[index], key)
+                  if (includes(allowedFormats, ENTITY.TERM)) {
+                    return termDecorator(matches.terms[index], key)
                   } else {
                     return matches.terms[index]
                   }
@@ -101,12 +102,8 @@ class ReactFormatter extends React.Component<Props, {}> {
               case ENTITY.EMAIL:
                 const emailData = matches.email[index]
                 if (hasIn(matches, ['email', index])) {
-                  return includes(this.props.allowedFormats, ENTITY.EMAIL)
-                    ? this.props.EmailDecorator(
-                      emailData.url,
-                      emailData.title,
-                      key
-                    )
+                  return includes(allowedFormats, ENTITY.EMAIL)
+                    ? emailDecorator(emailData.url, emailData.title, key)
                     : emailData.title
                 }
                 return

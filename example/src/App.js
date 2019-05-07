@@ -121,13 +121,13 @@ export default class App extends Component {
               "CreditCard",
               "Term"
             ]}
-            LinkDecorator={this.customLinkDecorator}
-            EmailDecorator={this.customEmailDecorator}
-            PhoneDecorator={this.customPhoneDecorator}
-            CreditCardDecorator={this.customCreditCardDecorator}
-            ImageDecorator={this.customImageDecorator}
-            Terms={["Link", "phone", "image", "Anchor", "email", "contact", "Credit"]}
-            TermDecorator={this.customTermDecorator}
+            linkDecorator={this.customLinkDecorator}
+            emailDecorator={this.customEmailDecorator}
+            phoneDecorator={this.customPhoneDecorator}
+            creditCardDecorator={this.customCreditCardDecorator}
+            imageDecorator={this.customImageDecorator}
+            terms={["Link", "phone", "image", "Anchor", "email", "contact", "Credit"]}
+            termDecorator={this.customTermDecorator}
           >
             {this.getContent()}
           </ReactTextFormat>
