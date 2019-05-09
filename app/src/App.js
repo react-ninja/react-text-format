@@ -29,7 +29,7 @@ export default class App extends Component {
                 </a>
               </h1>
               <h4 className="font-italic font-weight-light">
-                React Component to find and format links, emails, phone numbers,
+                React Component to find and parse links, emails, phone numbers,
                 image's URL, credit cards and keywords to required format.
               </h4>
             </Col>
