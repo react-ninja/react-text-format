@@ -4,6 +4,7 @@
 
 [![NPM](https://img.shields.io/npm/v/react-text-format.svg)](https://www.npmjs.com/package/react-text-format) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+__[View live demo here](https://react-ninja.github.io/react-text-format/)__
 
 ## Installation
 
