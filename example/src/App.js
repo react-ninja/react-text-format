@@ -1,138 +1,77 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import "./App.css";
+import { Container, Row, Col } from "reactstrap";
+import Accordion from "./components/Accordion";
+import { config as basic } from "./components/Basic";
+import { config as link } from "./components/Link";
+import { config as email } from "./components/Email";
+import { config as phone } from "./components/Phone";
+import { config as image } from "./components/Image";
+import { config as creditcard } from "./components/CreditCard";
+import { config as term } from "./components/Term";
 
-import ReactTextFormat from "react-text-format";
-
+const examples = [basic, link, phone, email, image, creditcard, term];
 export default class App extends Component {
-  customLinkDecorator = (
-    decoratedHref: string,
-    decoratedText: string,
-    linkTarget: string,
-    key: number
-  ): React.Node => {
-    return (
-      <a
-        href={decoratedHref}
-        key={key}
-        target={linkTarget}
-        rel="noopener"
-        className="customLink"
-      >
-        {decoratedText}
-      </a>
-    );
-  };
-
-  customImageDecorator = (decoratedURL: string, key: number): React.Node => {
-    return (
-      <div>
-        <img
-          src={decoratedURL}
-          key={key}
-          rel="noopener"
-          width="100"
-          className="customImage"
-          alt={decoratedURL}
-        />
-      </div>
-    );
-  };
-
-  customEmailDecorator = (
-    decoratedHref: string,
-    decoratedText: string,
-    key: number
-  ): React.Node => {
-    return (
-      <a href={decoratedHref} key={key} className="customEmail">
-        {decoratedText}
-      </a>
-    );
-  };
-
-  customPhoneDecorator = (decoratedText: string, key: number): React.Node => {
-    return (
-      <a href={`tel:${decoratedText}`} key={key} className="customPhone">
-        {decoratedText}
-      </a>
-    );
-  };
-
-  customCreditCardDecorator = (
-    decoratedText: string,
-    key: number
-  ): React.Node => {
-    return (
-      <i key={key} className="customCreditCard">
-        <b>{decoratedText}</b>
-      </i>
-    );
-  };
-
-  customTermDecorator = (decoratedText: string, key: number): React.Node => {
-    return (
-      <b key={key} className="keyword">
-        {decoratedText}
-      </b>
-    );
-  };
-
-  getContent = (): React.Node => (
-    <div>
-      This is demo link http://www.google.com
-      <br />
-      This is encoded Link http://go%2Emsn%2Ecom/nl/133942%2Easp
-      <br />
-      This is demo email <span data-email="email@span.com">jago@yahoo.com</span>
-      <br />
-      <br />
-      This is demo image
-      https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
-      <br />
-      <br />
-      This is demo credit Card 5555555555554444
-      <br />
-      <br />
-      This is demo phone Number 123.456.7890 <br />
-      This is demo phone Number (212) 555 1212 <br />
-      This is demo Phone Number (212) 555-1212 <br />
-      This is demo phone Number 212-555-1212 ext. 101 <br />
-      This is demo phone Number 212 555 1212 x101 <br />
-      <br />
-      <br />
-      This is an anchor <a href="http://formatter.com">http://formatter.com</a>;
-    </div>
-  );
-
   render() {
     return (
-      <div>
-        <div>
-          <h3>Basic Implementation</h3>
-          <ReactTextFormat>{this.getContent()}</ReactTextFormat>
-        </div>
-        <div>
-          <h3>Advance Implementation</h3>
-          <ReactTextFormat
-            allowedFormats={[
-              "URL",
-              "Email",
-              "Image",
-              "Phone",
-              "CreditCard",
-              "Term"
-            ]}
-            linkDecorator={this.customLinkDecorator}
-            emailDecorator={this.customEmailDecorator}
-            phoneDecorator={this.customPhoneDecorator}
-            creditCardDecorator={this.customCreditCardDecorator}
-            imageDecorator={this.customImageDecorator}
-            terms={["Link", "phone", "image", "Anchor", "email", "contact", "Credit"]}
-            termDecorator={this.customTermDecorator}
-          >
-            {this.getContent()}
-          </ReactTextFormat>
-        </div>
-      </div>
+      <Fragment>
+        <Container>
+          <Row className="text-light text-center mt-5">
+            <Col>
+              <h1 className="w-100">
+                <a
+                  href="https://www.npmjs.com/package/react-text-format"
+                  target="_blank"
+                  className="package-title"
+                  rel="noopener noreferrer"
+                >
+                  React Text Format
+                </a>
+              </h1>
+              <h4 className="font-italic font-weight-light">
+                React Component to find and format links, emails, phone numbers,
+                image's URL, credit cards and keywords to required format.
+              </h4>
+            </Col>
+          </Row>
+          <Row className="text-light text-center">
+            <Col>
+              <a
+                href="https://www.npmjs.com/package/react-text-format"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mr-4"
+              >
+                <img
+                  src="https://user-images.githubusercontent.com/1968160/57470661-cd87ac80-72a2-11e9-9ef0-b5f209b574d2.png"
+                  alt="https://user-images.githubusercontent.com/1968160/57470661-cd87ac80-72a2-11e9-9ef0-b5f209b574d2.png"
+                  height="50"
+                />
+              </a>
+              <a
+                href="https://www.npmjs.com/package/react-text-format"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://user-images.githubusercontent.com/1968160/57470662-cd87ac80-72a2-11e9-8ba4-2ee4ca1b0028.png"
+                  alt="https://user-images.githubusercontent.com/1968160/57470662-cd87ac80-72a2-11e9-8ba4-2ee4ca1b0028.png"
+                  height="50"
+                />
+              </a>
+            </Col>
+          </Row>
+
+          {examples.map(({ title, description, input, output }) => (
+            <Accordion
+              title={title}
+              description={description}
+              input={input}
+              output={output}
+            />
+          ))}
+        </Container>
+      </Fragment>
     );
   }
 }
