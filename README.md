@@ -1,6 +1,6 @@
 # react-text-format
 
-> React Component to find and format links, emails, phone numbers, image's URL & credit cards to required format.
+> React Component to find and parse links, emails, phone numbers, image's URL & credit cards to required format.
 
 [![NPM](https://img.shields.io/npm/v/react-text-format.svg)](https://www.npmjs.com/package/react-text-format) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
