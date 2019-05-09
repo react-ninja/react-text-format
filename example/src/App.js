@@ -49,13 +49,13 @@ export default class App extends Component {
                 />
               </a>
               <a
-                href="https://www.npmjs.com/package/react-text-format"
+                href="https://yarnpkg.com/en/package/react-text-format"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <img
                   src="https://user-images.githubusercontent.com/1968160/57470662-cd87ac80-72a2-11e9-8ba4-2ee4ca1b0028.png"
-                  alt="https://user-images.githubusercontent.com/1968160/57470662-cd87ac80-72a2-11e9-8ba4-2ee4ca1b0028.png"
+                  alt="Yarn"
                   height="50"
                 />
               </a>
