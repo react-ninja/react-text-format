@@ -21,7 +21,7 @@ const input = () => {
 const output = () => {
   return (
     <div className="output">
-      <ReactTextFormat> {ReactHtmlParser(content)}</ReactTextFormat>;
+      <ReactTextFormat> {ReactHtmlParser(content)}</ReactTextFormat>
     </div>
   );
 };
