@@ -25,12 +25,12 @@ npm install react-text-format --save
 |allowedFormats| Array ``['URL', 'Email', 'Image', 'Phone', 'CreditCard']``| ``['URL', 'Email', 'Phone']`` |
 |linkTarget| String (_blank \| _self \| _parent \| _top \| framename)  |  ``_self`` |
 |terms| Array of strings  |  [] |
-|linkDecorator| React.Node (decoratedHref: string, decoratedText: string, linkTarget: string, key: number) | Output Format: ``<a href="{URL}" target="{target}" rel='noopener' className='rtfLink'> <URL> </a>``  
-|emailDecorator| React.Node (decoratedHref: string, decoratedText: string,key: number)  | Output Format:``<a href="mailto: {EMAIL ADDRESS}" className='rtfEmail'> {EMAIL ADDRESS} </a>``  |
-|phoneDecorator| React.Node (decoratedText: string, key: number)  | Output Format``<a href="tel:{PHONE NUMBER}" className='rtfEmail'> {PHONE NUMBER} </a>``  |
-|creditCardDecorator| React.Node (decoratedText: string, key: number)  | Output Format: ``<span className='rtfCreditCard'> {CREDIT CARD NUMBER} </span>``  |
-|imageDecorator| React.Node (decoratedURL: string, key: number)  | Output Format: ``<img src="{URL OF IMAGE}" rel='noopener' className='rtfImage' />``  |
-|termDecorator| React.Node (decoratedText: string, key: number)  | Output Format: ``<span key={key} className='rtfTerm'>{decoratedText}</span>``  |
+|linkDecorator| React.Node (decoratedHref: string, decoratedText: string, linkTarget: string) | Output Format: ``<a href="{URL}" target="{target}" rel='noopener' className='rtfLink'> <URL> </a>``  
+|emailDecorator| React.Node (decoratedHref: string, decoratedText: string)  | Output Format:``<a href="mailto: {EMAIL ADDRESS}" className='rtfEmail'> {EMAIL ADDRESS} </a>``  |
+|phoneDecorator| React.Node (decoratedText: string)  | Output Format``<a href="tel:{PHONE NUMBER}" className='rtfEmail'> {PHONE NUMBER} </a>``  |
+|creditCardDecorator| React.Node (decoratedText: string)  | Output Format: ``<span className='rtfCreditCard'> {CREDIT CARD NUMBER} </span>``  |
+|imageDecorator| React.Node (decoratedURL: string)  | Output Format: ``<img src="{URL OF IMAGE}" rel='noopener' className='rtfImage' />``  |
+|termDecorator| React.Node (decoratedText: string)  | Output Format: ``<span  className='rtfTerm'>{decoratedText}</span>``  |
 
 ## Usage
 
@@ -69,13 +69,12 @@ import ReactTextFormat from 'react-text-format';
 customLinkDecorator = (
     decoratedHref: string,
     decoratedText: string,
-    linkTarget: string,
-    key: number
+    linkTarget: string
   ): React.Node => {
     return (
       <a
         href={decoratedHref}
-        key={key}
+
         target={linkTarget}
         rel='noopener'
         className='customLink'
@@ -86,23 +85,21 @@ customLinkDecorator = (
   }
 
 customImageDecorator = (
-    decoratedURL: string,
-    key: number
+    decoratedURL: string
     ): React.Node => {
     return (
       <div>
-        <img src={decoratedURL} key={key} rel='noopener' width="100" className='customImage' />
+        <img src={decoratedURL}  rel='noopener' width="100" className='customImage' />
       </div>
 )
 }
 
 customEmailDecorator = (
     decoratedHref: string,
-    decoratedText: string,
-    key: number
+    decoratedText: string
     ): React.Node => {
     return (
-      <a href={decoratedHref} key={key} className='customEmail'>
+      <a href={decoratedHref}  className='customEmail'>
         {decoratedText}
       </a>
     )
@@ -113,26 +110,25 @@ customPhoneDecorator = (
     key: number
     ): React.Node => {
     return (
-      <a href={`tel:${decoratedText}`} key={key} className='customPhone'>
+      <a href={`tel:${decoratedText}`}  className='customPhone'>
         {decoratedText}
       </a>
     )
 }
 
 customCreditCardDecorator = (
-    decoratedText: string,
-    key: number
+    decoratedText: string
     ): React.Node => {
     return (
-      <i key={key} className='customCreditCard'>
+      <i  className='customCreditCard'>
         <b>{decoratedText}</b>
       </i>
     )
 }
 
-customTermDecorator = (decoratedText: string, key: number): React.Node => {
+customTermDecorator = (decoratedText: string): React.Node => {
   return (
-    <b key={key} className="keyword">
+    <b  className="keyword">
       {decoratedText}
     </b>
   );
