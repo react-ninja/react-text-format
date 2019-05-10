@@ -2,6 +2,7 @@ import LinkifyIt from 'linkify-it'
 import compact from 'lodash/compact'
 import map from 'lodash/map'
 import each from 'lodash/each'
+import replace from 'lodash/replace'
 import uniq from 'lodash/uniq'
 import first from 'lodash/first'
 import filter from 'lodash/filter'
@@ -122,13 +123,14 @@ class MatchDecorators {
     if (this.termKeywords.length > 0) {
       let termKeywords = []
       each(this.termKeywords, term => {
-        const regex = new RegExp(term, 'i')
+        const regex = new RegExp(term, 'ig')
         const match = this.content.match(regex)
         if (match) {
-          const matchedTerm = match[0]
-          const shortcode = this.createShortcode(ENTITY.TERM, this.terms.length)
-          this.setContent(this.content.replace(matchedTerm, shortcode))
-          this.terms.push(matchedTerm)
+          map(uniq(match), (val) => {
+            const shortcode = this.createShortcode(ENTITY.TERM, this.terms.length)
+            this.setContent(replace(this.content, new RegExp(`(?<=^|\\s)(${val})(?=\\s|$)`, 'g'), shortcode))
+            this.terms.push(val)
+          });
         }
       })
     }

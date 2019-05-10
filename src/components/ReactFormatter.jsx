@@ -3,6 +3,7 @@ import map from 'lodash/map'
 import includes from 'lodash/includes'
 import hasIn from 'lodash/hasIn'
 import random from 'lodash/random'
+import replace from 'lodash/replace'
 import defaultMatchDecorator, {
   ENTITY
 } from '../decorators/defaultMatchDecorator'
@@ -51,7 +52,7 @@ class ReactFormatter extends React.Component<Props, {}> {
           if (includes(content, 'SHORTCODE:')) {
             const shortcode = content.replace('SHORTCODE:', '').split(' ')
             const shortcodeType = shortcode[0]
-            const index = parseInt(shortcode[1].replace('key=', ''))
+            const index = parseInt(replace(shortcode[1], 'key=', ''))
             const key = `${i}${random(1, 1000000)}`
             switch (shortcodeType) {
               case ENTITY.URL:
