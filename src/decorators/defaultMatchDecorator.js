@@ -3,6 +3,7 @@ import compact from 'lodash/compact'
 import map from 'lodash/map'
 import each from 'lodash/each'
 import replace from 'lodash/replace'
+import capitalize from 'lodash/capitalize'
 import uniq from 'lodash/uniq'
 import first from 'lodash/first'
 import filter from 'lodash/filter'
@@ -122,9 +123,13 @@ class MatchDecorators {
   findTerms = () => {
     const replaceWord = (content, val, shortcode) => {
       try{
-        return replace(content, new RegExp(`(?<=^|\\s)${val}(?=\\s|$)`, 'g'), shortcode);
+        return replace(content, new RegExp(`(^|\\b)(?<!:)(${val})(\\b|$)`, 'g'), shortcode);
       }catch(e){
-        return replace(content, new RegExp(`(^|\\s)(${val})(\\s|$)`, 'g'), ` ${shortcode} `);
+        const updatedKey = `:_${val}`;
+        content = replace(content, new RegExp(`(^|\\b)(:${val})(\\b|$)`, 'g'), updatedKey);
+        content = replace(content, new RegExp(`(^|\\b)(${val})(\\b|$)`, 'g'), shortcode);
+        content = replace(content, new RegExp(`(^|\\b)(${updatedKey})(\\b|$)`, 'g'), `:${capitalize(val)}`);
+        return content;
       }
     }
     try{
