@@ -9,7 +9,7 @@
     "react-element-to-jsx-string": "^14.0.2",
     "react-html-parser": "^2.0.2",
     "react-scripts": "3.0.0",
-    "react-text-format": "^2.0.1",
+    "react-text-format": "^2.0.23",
     "reactstrap": "^8.0.0"
   },
   "scripts": {
