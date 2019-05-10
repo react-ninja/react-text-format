@@ -120,20 +120,32 @@ class MatchDecorators {
   }
 
   findTerms = () => {
-    if (this.termKeywords.length > 0) {
-      let termKeywords = []
-      each(this.termKeywords, term => {
-        const regex = new RegExp(term, 'ig')
-        const match = this.content.match(regex)
-        if (match) {
-          map(uniq(match), (val) => {
-            const shortcode = this.createShortcode(ENTITY.TERM, this.terms.length)
-            this.setContent(replace(this.content, new RegExp(`(?<=^|\\s)(${val})(?=\\s|$)`, 'g'), shortcode))
-            this.terms.push(val)
-          });
-        }
-      })
+    const replaceWord = (content, val, shortcode) => {
+      try{
+        return replace(content, new RegExp(`(?<=^|\\s)${val}(?=\\s|$)`, 'g'), shortcode);
+      }catch(e){
+        return replace(content, new RegExp(`(^|\\s)(${val})(\\s|$)`, 'g'), ` ${shortcode} `);
+      }
     }
+    try{
+      if (this.termKeywords.length > 0) {
+        let termKeywords = []
+        each(this.termKeywords, term => {
+          const regex = new RegExp(term, 'ig')
+          const match = this.content.match(regex)
+          if (match) {
+            map(uniq(match), (val) => {
+              const shortcode = this.createShortcode(ENTITY.TERM, this.terms.length)
+              this.setContent(replaceWord(this.content, val, shortcode))
+              this.terms.push(val)
+            });
+          }
+        })
+      }
+    }catch(e){
+      return null;
+    }
+
   }
 
   isImageURL = url => {
