@@ -6,13 +6,11 @@ export default class App extends Component {
   customLinkDecorator = (
     decoratedHref: string,
     decoratedText: string,
-    linkTarget: string,
-    key: number
+    linkTarget: string
   ): React.Node => {
     return (
       <a
         href={decoratedHref}
-        key={key}
         target={linkTarget}
         rel="noopener"
         className="customLink"
@@ -22,12 +20,11 @@ export default class App extends Component {
     );
   };
 
-  customImageDecorator = (decoratedURL: string, key: number): React.Node => {
+  customImageDecorator = (decoratedURL: string): React.Node => {
     return (
       <div>
         <img
           src={decoratedURL}
-          key={key}
           rel="noopener"
           width="100"
           className="customImage"
@@ -39,41 +36,33 @@ export default class App extends Component {
 
   customEmailDecorator = (
     decoratedHref: string,
-    decoratedText: string,
-    key: number
+    decoratedText: string
   ): React.Node => {
     return (
-      <a href={decoratedHref} key={key} className="customEmail">
+      <a href={decoratedHref} className="customEmail">
         {decoratedText}
       </a>
     );
   };
 
-  customPhoneDecorator = (decoratedText: string, key: number): React.Node => {
+  customPhoneDecorator = (decoratedText: string): React.Node => {
     return (
-      <a href={`tel:${decoratedText}`} key={key} className="customPhone">
+      <a href={`tel:${decoratedText}`} className="customPhone">
         {decoratedText}
       </a>
     );
   };
 
-  customCreditCardDecorator = (
-    decoratedText: string,
-    key: number
-  ): React.Node => {
+  customCreditCardDecorator = (decoratedText: string): React.Node => {
     return (
-      <i key={key} className="customCreditCard">
+      <i className="customCreditCard">
         <b>{decoratedText}</b>
       </i>
     );
   };
 
-  customTermDecorator = (decoratedText: string, key: number): React.Node => {
-    return (
-      <b key={key} className="keyword">
-        {decoratedText}
-      </b>
-    );
+  customTermDecorator = (decoratedText: string): React.Node => {
+    return <b className="keyword">{decoratedText}</b>;
   };
 
   getString = `This is demo link http://www.google.com
@@ -139,7 +128,15 @@ This is demo image
             phoneDecorator={this.customPhoneDecorator}
             creditCardDecorator={this.customCreditCardDecorator}
             imageDecorator={this.customImageDecorator}
-            terms={["Link", "phone", "image", "Anchor", "email", "contact", "Credit"]}
+            terms={[
+              "Link",
+              "phone",
+              "image",
+              "Anchor",
+              "email",
+              "contact",
+              "Credit"
+            ]}
             termDecorator={this.customTermDecorator}
           >
             {this.getContent()}

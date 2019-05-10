@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { Fragment } from 'react'
 import map from 'lodash/map'
 import includes from 'lodash/includes'
 import hasIn from 'lodash/hasIn'
@@ -8,6 +8,7 @@ import defaultMatchDecorator, {
   ENTITY
 } from '../decorators/defaultMatchDecorator'
 import {
+  decoratorWrapper,
   linkDecorator,
   emailDecorator,
   phoneDecorator,
@@ -15,7 +16,6 @@ import {
   imageDecorator,
   termDecorator
 } from '../decorators/defaultComponentDecorator'
-
 
 class ReactFormatter extends React.Component<Props, {}> {
   static defaultProps = {
@@ -57,14 +57,17 @@ class ReactFormatter extends React.Component<Props, {}> {
             switch (shortcodeType) {
               case ENTITY.URL:
                 if (hasIn(matches, ['urls', index, 'url'])) {
-                  return includes(allowedFormats, ENTITY.URL)
-                    ? linkDecorator(
-                      matches.urls[index].url,
-                      matches.urls[index].title,
-                      this.props.linkTarget,
+                  if (includes(allowedFormats, ENTITY.URL)) {
+                    return decoratorWrapper(
+                      linkDecorator(
+                        matches.urls[index].url,
+                        matches.urls[index].title,
+                        this.props.linkTarget
+                      ),
                       key
                     )
-                    : matches.urls[index].title
+                  }
+                  return matches.urls[index].title
                 }
                 return
               case ENTITY.IMAGE:
@@ -72,29 +75,43 @@ class ReactFormatter extends React.Component<Props, {}> {
                   hasIn(matches, ['images', index, 'url']) &&
                   includes(allowedFormats, ENTITY.IMAGE)
                 ) {
-                  return imageDecorator(matches.images[index].url, key)
+                  return decoratorWrapper(
+                    imageDecorator(matches.images[index].url),
+                    key
+                  )
                 }
                 if (hasIn(matches, ['images', index, 'title'])) {
-                  return matches.images[index].title
+                  return decoratorWrapper(matches.images[index].title, key)
                 }
               case ENTITY.CC:
                 if (hasIn(matches, ['cc', index])) {
-                  return includes(allowedFormats, ENTITY.CC)
-                    ? creditCardDecorator(matches.cc[index], key)
-                    : matches.cc[index]
+                  if (includes(allowedFormats, ENTITY.CC)) {
+                    return decoratorWrapper(
+                      creditCardDecorator(matches.cc[index]),
+                      key
+                    )
+                  }
+                  return matches.cc[index]
                 }
                 return
               case ENTITY.PHONE:
                 if (hasIn(matches, ['phone', index])) {
-                  return includes(allowedFormats, ENTITY.PHONE)
-                    ? phoneDecorator(matches.phone[index], key)
-                    : matches.phone[index]
+                  if (includes(allowedFormats, ENTITY.PHONE)) {
+                    return decoratorWrapper(
+                      phoneDecorator(matches.phone[index]),
+                      key
+                    )
+                  }
+                  return matches.phone[index]
                 }
                 return
               case ENTITY.TERM:
                 if (hasIn(matches, ['terms', index])) {
                   if (includes(allowedFormats, ENTITY.TERM)) {
-                    return termDecorator(matches.terms[index], key)
+                    return decoratorWrapper(
+                      termDecorator(matches.terms[index]),
+                      key
+                    )
                   } else {
                     return matches.terms[index]
                   }
@@ -103,8 +120,13 @@ class ReactFormatter extends React.Component<Props, {}> {
               case ENTITY.EMAIL:
                 const emailData = matches.email[index]
                 if (hasIn(matches, ['email', index])) {
+                  if (includes(allowedFormats, ENTITY.EMAIL)) {
+                  }
                   return includes(allowedFormats, ENTITY.EMAIL)
-                    ? emailDecorator(emailData.url, emailData.title, key)
+                    ? decoratorWrapper(
+                      emailDecorator(emailData.url, emailData.title),
+                      key
+                    )
                     : emailData.title
                 }
                 return

@@ -1,28 +1,17 @@
-import * as React from 'react'
+import React, { Fragment } from 'react'
 
-export default (
-  decoratedHref: string,
-  decoratedText: string,
-  linkTarget: string,
-  key: number
-): React.Node => {
-  return (
-    <a href={decoratedHref} key={key} target={linkTarget} rel='noopener'>
-      {decoratedText}
-    </a>
-  )
+export const decoratorWrapper = (decorator, key) => {
+  return <Fragment key={key}>{decorator}</Fragment>
 }
 
 export const linkDecorator = (
   decoratedHref: string,
   decoratedText: string,
   linkTarget: string,
-  key: number
 ): React.Node => {
   return (
     <a
       href={decoratedHref}
-      key={key}
       target={linkTarget}
       rel='noopener'
       className='rtfLink'
@@ -34,12 +23,10 @@ export const linkDecorator = (
 
 export const imageDecorator = (
   decoratedURL: string,
-  key: number
 ): React.Node => {
   return (
     <img
       src={decoratedURL}
-      key={key}
       rel='noopener'
       className='rtfImage'
       alt={decoratedURL}
@@ -50,10 +37,9 @@ export const imageDecorator = (
 export const emailDecorator = (
   decoratedHref: string,
   decoratedText: string,
-  key: number
 ): React.Node => {
   return (
-    <a href={decoratedHref} key={key} className='rtfEmail'>
+    <a href={decoratedHref} className='rtfEmail'>
       {decoratedText}
     </a>
   )
@@ -61,10 +47,9 @@ export const emailDecorator = (
 
 export const phoneDecorator = (
   decoratedText: string,
-  key: number
 ): React.Node => {
   return (
-    <a href={`tel:${decoratedText}`} key={key} className='rtfPhone'>
+    <a href={`tel:${decoratedText}`} className='rtfPhone'>
       {decoratedText}
     </a>
   )
@@ -72,10 +57,9 @@ export const phoneDecorator = (
 
 export const creditCardDecorator = (
   decoratedText: string,
-  key: number
 ): React.Node => {
   return (
-    <span key={key} className='rtfCreditCard'>
+    <span className='rtfCreditCard'>
       {decoratedText}
     </span>
   )
@@ -83,11 +67,6 @@ export const creditCardDecorator = (
 
 export const termDecorator = (
   decoratedText: string,
-  key: number
 ): React.Node => {
-  return (
-    <span key={key} className='rtfTerm'>
-      {decoratedText}
-    </span>
-  )
+  return <span className='rtfTerm'>{decoratedText}</span>
 }
