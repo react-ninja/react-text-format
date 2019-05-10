@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && cd .. && mv app/build demo && mv demo/index.html index.html && python3 demo_build.py index.html",
+    "build": "react-scripts build && cd .. && rm -r demo && rm index.html && mv app/build demo && mv demo/index.html index.html && python3 demo_build.py index.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
