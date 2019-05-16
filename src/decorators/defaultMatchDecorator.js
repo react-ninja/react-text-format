@@ -10,7 +10,7 @@ import filter from 'lodash/filter'
 import includes from 'lodash/includes'
 import toLower from 'lodash/toLower'
 
-const SEPARATOR = '(-|\\s+|\\.|\\/|\\\\|\\:|,)*'
+const SEPARATOR = '(-|\\s|\\.|\\/|\\\\|\\:|,)*'
 const AMERICANEXPRESS = `((?:3[47][0-9]{2}${SEPARATOR}[0-9]{6}(-|\\s+)?[0-9]{5}))`
 const MASTERCARD = `((?:(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)${SEPARATOR}[0-9]{4}${SEPARATOR}[0-9]{4}${SEPARATOR}[0-9]{4}))`
 const VISA = `((?:4[0-9]{3}${SEPARATOR}[0-9]{4}${SEPARATOR}[0-9]{4})${SEPARATOR}(?:[0-9]{4})?)`
