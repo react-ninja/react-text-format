@@ -9,7 +9,9 @@ Enzyme.configure({ adapter: new Adapter() })
 describe('Test Anchor', () => {
   it('Test Single Anchor', () => {
     const component = (
-      <ReactTextFormat>This is demo link http://www.google.com</ReactTextFormat>
+      <ReactTextFormat>
+        This is demo link http://www.google.com
+      </ReactTextFormat>
     )
 
     const wrapper = shallow(component)
@@ -19,8 +21,7 @@ describe('Test Anchor', () => {
   it('Test Encoded URL', () => {
     const component = (
       <ReactTextFormat>
-        This is encoded Link
-        http://go%2Emsn%2Ecom/nl/133942%2Easp
+        This is encoded Link http://go%2Emsn%2Ecom/nl/133942%2Easp
       </ReactTextFormat>
     )
 
@@ -30,19 +31,20 @@ describe('Test Anchor', () => {
 
   it('Test Multiple Anchor', () => {
     const component = (
-      <ReactTextFormat>
+      <ReactTextFormat allowedFormats={['URL']}>
         This is demo link http://www.google.com
         <br />
         This is demo link http://www.msn.com
         <br />
         This is an anchor{' '}
-        <a href='http://formatter.com'>http://formatter.com</a>;
+        <a href='http://formatter.com'>http://formatter.com</a>
+          This is demo link http://www.google.com and emails  www.google.com  is  google.com abc@gmail.com https://google.com ftp://ftp.xyz.com
       </ReactTextFormat>
     )
 
     const wrapper = shallow(component)
-    expect(wrapper.find('a')).to.have.lengthOf(3)
-    expect(wrapper.find('a.rtfLink')).to.have.lengthOf(2)
+    expect(wrapper.find('a')).to.have.lengthOf(8)
+    expect(wrapper.find('a.rtfLink')).to.have.lengthOf(7)
   })
 })
 
@@ -63,6 +65,7 @@ describe('Test Email', () => {
         <br />
         This is demo email santorus@wolf.com
         <br />
+        http://gmail.com yahoo.com www.ebay.com https://msg.com
       </ReactTextFormat>
     )
 
@@ -72,10 +75,22 @@ describe('Test Email', () => {
 })
 
 describe('Test Image', () => {
+  it('Image should not be rendered', () => {
+    const component = (
+      <ReactTextFormat allowedFormats={['Url']}>
+        This is demo image url
+        https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
+      </ReactTextFormat>
+    )
+
+    const wrapper = shallow(component)
+    expect(wrapper.find('img.rtfImage')).to.have.lengthOf(0)
+  })
   it('Test Single Image', () => {
     const component = (
       <ReactTextFormat allowedFormats={['Image']}>
         This is demo image url
+        http://gmail.com yahoo.com www.ebay.com https://msg.com
         https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114350-unsplash.jpg
       </ReactTextFormat>
     )
@@ -93,6 +108,7 @@ describe('Test Image', () => {
         This is demo email
         https://preview.ibb.co/hqhoyA/lexie-barnhorn-1114351-unsplash.jpg
         <br />
+        http://gmail.com yahoo.com www.ebay.com https://msg.com
       </ReactTextFormat>
     )
 
@@ -163,5 +179,32 @@ describe('Test Credit Card', () => {
 
     const wrapper = shallow(component)
     expect(wrapper.find('span.rtfCreditCard')).to.have.lengthOf(10)
+  })
+})
+
+describe('Test Terms', () => {
+  it('Test Single Term', () => {
+    const component = (
+      <ReactTextFormat allowedFormats={['Term']} terms={['demo']}>
+        This is demo credit Card 5555555555554444
+      </ReactTextFormat>
+    )
+
+    const wrapper = shallow(component)
+    expect(wrapper.find('span.rtfTerm')).to.have.lengthOf(1)
+  })
+
+  it('Test Multiple  Credit Card', () => {
+    const component = (
+      <ReactTextFormat
+        allowedFormats={['Term']}
+        terms={['demo', 'credit', 'card', 'phone', 'undefined']}
+      >
+        This is demo credit Card, This is my demo phone Number
+      </ReactTextFormat>
+    )
+
+    const wrapper = shallow(component)
+    expect(wrapper.find('span.rtfTerm')).to.have.lengthOf(5)
   })
 })

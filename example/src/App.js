@@ -76,6 +76,7 @@ This is demo image
   This is demo Phone Number (212) 555-1212
   This is demo phone Number 212-555-1212 ext. 101
   This is demo phone Number 212 555 1212 x101
+  myname is admin@msn.com
   This is an anchor <a href="http://formatter.com">http://formatter.com</a>`;
 
   getContent = (): React.Node => (
