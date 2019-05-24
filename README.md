@@ -18,23 +18,7 @@ or
 npm install react-text-format --save
 ```
 
-## Props
-
-|Name  | Type  | Default  |
-|---|---|---|
-|allowedFormats| Array ``['URL', 'Email', 'Image', 'Phone', 'CreditCard']``| ``['URL', 'Email', 'Phone']`` |
-|linkTarget| String (_blank \| _self \| _parent \| _top \| framename)  |  ``_self`` |
-|terms| Array of strings  |  [] |
-|linkDecorator| React.Node (decoratedHref: string, decoratedText: string, linkTarget: string) | Output Format: ``<a href="{URL}" target="{target}" rel='noopener' className='rtfLink'> <URL> </a>``  
-|emailDecorator| React.Node (decoratedHref: string, decoratedText: string)  | Output Format:``<a href="mailto: {EMAIL ADDRESS}" className='rtfEmail'> {EMAIL ADDRESS} </a>``  |
-|phoneDecorator| React.Node (decoratedText: string)  | Output Format``<a href="tel:{PHONE NUMBER}" className='rtfEmail'> {PHONE NUMBER} </a>``  |
-|creditCardDecorator| React.Node (decoratedText: string)  | Output Format: ``<span className='rtfCreditCard'> {CREDIT CARD NUMBER} </span>``  |
-|imageDecorator| React.Node (decoratedURL: string)  | Output Format: ``<img src="{URL OF IMAGE}" rel='noopener' className='rtfImage' />``  |
-|termDecorator| React.Node (decoratedText: string)  | Output Format: ``<span  className='rtfTerm'>{decoratedText}</span>``  |
-
-## Usage
-
-### Basic Implementation
+### Basic Usage
 ```js
 import ReactTextFormat from 'react-text-format';
 
@@ -60,7 +44,10 @@ React.render(
 ###### Output:
 ![Generated Avatar](https://image.ibb.co/bWcDs0/1-0-4-basic.png)  
 
-### Advance Implementation
+
+
+
+### Advance Usage
 ```js
 import ReactTextFormat from 'react-text-format';
 
@@ -140,7 +127,6 @@ React.render(
           creditCardDecorator={customCreditCardDecorator}
           imageDecorator={customImageDecorator}
           terms={["Link", "phone", "image", "Anchor", "email", "Credit"]}
-          termDecorator={customTermDecorator}
           >
             This is demo link http://www.google.com
             This is encoded Link http://go%2Emsn%2Ecom/nl/133942%2Easp
@@ -165,3 +151,19 @@ React.render(
 
 ###### Output:
 ![Generated Avatar](https://i.ibb.co/r67P3JC/advance-react-text-format.png)  
+
+
+
+## Props
+
+|Name  | Type  | Default  |
+|---|---|---|
+|allowedFormats| Array ``['URL', 'Email', 'Image', 'Phone', 'CreditCard', 'Term']``| ``['URL', 'Email', 'Phone', 'Term']`` |
+|linkTarget| String (_blank \| _self \| _parent \| _top \| framename)  |  ``_self`` |
+|terms| Array of strings  |  [] |
+|linkDecorator| React.Node (decoratedHref: string, decoratedText: string, linkTarget: string) | Output Format: ``<a href="{URL}" target="{target}" rel='noopener' className='rtfLink'> <URL> </a>``  
+|emailDecorator| React.Node (decoratedHref: string, decoratedText: string)  | Output Format:``<a href="mailto: {EMAIL ADDRESS}" className='rtfEmail'> {EMAIL ADDRESS} </a>``  |
+|phoneDecorator| React.Node (decoratedText: string)  | Output Format``<a href="tel:{PHONE NUMBER}" className='rtfEmail'> {PHONE NUMBER} </a>``  |
+|creditCardDecorator| React.Node (decoratedText: string)  | Output Format: ``<span className='rtfCreditCard'> {CREDIT CARD NUMBER} </span>``  |
+|imageDecorator| React.Node (decoratedURL: string)  | Output Format: ``<img src="{URL OF IMAGE}" rel='noopener' className='rtfImage' />``  |
+|termDecorator| React.Node (decoratedText: string)  | Output Format: ``<span  className='rtfTerm'>{decoratedText}</span>``  |

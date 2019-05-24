@@ -5,6 +5,11 @@ import { ENTITY } from '../../config'
 import { createShortcode, logger } from '../../utils/common'
 import { IMAGE_REGEX, NUMBER_REGEX } from './regex'
 
+/**
+ * isImageURL verifies that the provided url is an image url
+ * @param  {string}  url url of an image
+ * @return {Boolean}
+ */
 export const isImageURL = url => {
   try {
     return url.match(IMAGE_REGEX) != null
@@ -13,6 +18,11 @@ export const isImageURL = url => {
   }
 }
 
+/**
+ * scrapper function is used to find/extract the images from string,
+ * and replace the images with image shortcode in content.
+ * @param  {string} content
+ */
 const scrapper = content => {
   const images = []
   try {

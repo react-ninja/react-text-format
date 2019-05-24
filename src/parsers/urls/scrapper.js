@@ -13,7 +13,6 @@ const isNumberedDomain = url => {
     const isNumber = NUMBER_REGEX.test(domain)
     return url.schema === '' && isNumber
   } catch (e) {
-    console.log(url)
     return false
   }
 }

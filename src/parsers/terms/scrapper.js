@@ -5,6 +5,13 @@ import replace from 'lodash/replace'
 import { ENTITY } from '../../config'
 import { createShortcode, logger } from '../../utils/common'
 
+/**
+ * replaceWord finds the term/val from content through content.
+ * @param  {string} content   content through which term needs to be extracted
+ * @param  {string} val       term name
+ * @param  {string} shortcode shortcode
+ * @return {string}           content with shortcode which replaced term
+ */
 const replaceWord = (content, val, shortcode) => {
   try {
     return replace(
@@ -33,6 +40,11 @@ const replaceWord = (content, val, shortcode) => {
   }
 }
 
+/**
+ * scrapper function is used to find/extract the terms from string,
+ * and replace the terms with image shortcode in content.
+ * @param  {string} content
+ */
 const scrapper = (content, termKeywords) => {
   const terms = []
   try {

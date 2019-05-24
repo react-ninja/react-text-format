@@ -6,6 +6,12 @@ import { CC_REGEXES } from './regex'
 import { ENTITY } from '../../config'
 import { createShortcode, logger } from '../../utils/common'
 
+/**
+ * scrapper function is used to find/extract the creditcard numbers from string,
+ * and replace the creditcard number with creditcard shortcode in content.
+ *
+ * @param  {string} content
+ */
 const scrapper = content => {
   const cc = []
   try {

@@ -1,10 +1,11 @@
 import each from 'lodash/each'
-import compact from 'lodash/compact'
-import uniq from 'lodash/uniq'
 import { PHONE_NUMBER_REGEX } from './regex'
 import { ENTITY } from '../../config'
 import { createShortcode, logger } from '../../utils/common'
-
+/**
+ * scraper function is used to find/extract the phone from content argument,
+ * @param  {string} content
+ */
 const scraper = content => {
   const phone = []
   try {
