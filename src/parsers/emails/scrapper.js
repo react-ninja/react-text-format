@@ -8,10 +8,8 @@ import { createShortcode, logger } from '../../utils/common'
 const scrapper = content => {
   const emails = []
   try {
-    const data = LinkifyIt()
-      .add('http:', null)
-      .add('ftp:', null)
-      .match(content)
+    let data = LinkifyIt().match(content)
+    data = filter(data, val => val.schema === 'mailto:')
     each(data, (val, i) => {
       const shortcode = createShortcode(ENTITY.EMAIL, emails.length)
       content = content.replace(val.raw, shortcode)

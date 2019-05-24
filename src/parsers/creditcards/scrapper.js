@@ -14,7 +14,7 @@ const scrapper = content => {
     ccNums = uniq(ccNums[0])
     each(ccNums, (ccNum, i) => {
       const shortcode = createShortcode(ENTITY.CC, i)
-      content = content.replace(cc, shortcode)
+      content = content.replace(ccNum, shortcode)
       cc.push(ccNum)
     });
   } catch (e) {
