@@ -7,6 +7,11 @@ import { createShortcode, logger } from '../../utils/common'
 import { NUMBER_REGEX } from './regex'
 import { isImageURL } from '../images/scrapper'
 
+/**
+ * isNumberedDomain returns false if the url > tld is a number
+ * @param  {string}  url
+ * @return {Boolean}
+ */
 const isNumberedDomain = url => {
   try {
     const domain = first(url.split('.'))
@@ -17,6 +22,10 @@ const isNumberedDomain = url => {
   }
 }
 
+/**
+ * scrapper function is used to find/extract the urls from string.
+ * @param  {string} content
+ */
 const scrapper = content => {
   const urls = []
   try {

@@ -10,6 +10,12 @@ const decoratorWrapper = (decorator, key) => {
   return <Fragment key={key}>{decorator}</Fragment>
 }
 
+/**
+ * decorator finds the shortcodes from content (array) and replace them with
+ * formatted react nodes.
+ * @param  {array} matches array of extracted formats
+ * @param  {json} args    contains all the props
+ */
 const decorator = (matches, args) => {
   const {
     allowedFormats,

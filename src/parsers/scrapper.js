@@ -9,7 +9,13 @@ import CreditCardScrapper from '../parsers/creditcards/scrapper'
 import PhoneNumberScrapper from '../parsers/phone/scrapper'
 import TermsScrapper from '../parsers/terms/scrapper'
 
-const formatContent = (allowedFormats, content, termKeywords) => {
+/**
+ * scrapeFormats function extract all the formats from content
+ * @param  {array} allowedFormats formats which are used to extract from content
+ * @param  {string} content        string through which the function needs to find the formats
+ * @param  {array} termKeywords   terms which needs to find/extract from content 
+ */
+const scrapeFormats = (allowedFormats, content, termKeywords) => {
   const data = {
     content: decodeURIComponent(content),
     urls: [],
@@ -55,4 +61,4 @@ const formatContent = (allowedFormats, content, termKeywords) => {
   return data
 }
 
-export default formatContent
+export default scrapeFormats
