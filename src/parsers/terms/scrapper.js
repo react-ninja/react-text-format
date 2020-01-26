@@ -2,6 +2,7 @@ import each from 'lodash/each'
 import map from 'lodash/map'
 import uniq from 'lodash/uniq'
 import replace from 'lodash/replace'
+import capitalize from 'lodash/capitalize'
 import { ENTITY } from '../../config'
 import { createShortcode, logger } from '../../utils/common'
 
@@ -62,7 +63,7 @@ const scrapper = (content, termKeywords) => {
       })
     }
   } catch (e) {
-    logger(e);
+    logger(e)
   }
   return {
     content,
