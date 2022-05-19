@@ -81,7 +81,7 @@
   ],
   "dependencies": {
     "linkify-it": "^2.0.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "react-test-renderer": "^16.5.2"
   }
 }
