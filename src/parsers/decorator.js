@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react'
-import map from 'lodash/map'
-import includes from 'lodash/includes'
-import replace from 'lodash/replace'
-import random from 'lodash/random'
-import hasIn from 'lodash/hasIn'
-import { ENTITY } from '../config'
+import React, { Fragment } from "react";
+import map from "lodash/map";
+import includes from "lodash/includes";
+import replace from "lodash/replace";
+import random from "lodash/random";
+import hasIn from "lodash/hasIn";
+import { ENTITY } from "../config";
 
 const decoratorWrapper = (decorator, key) => {
-  return <Fragment key={key}>{decorator}</Fragment>
-}
+  return <Fragment key={key}>{decorator}</Fragment>;
+};
 
 /**
  * decorator finds the shortcodes from content (array) and replace them with
@@ -26,18 +26,18 @@ const decorator = (matches, args) => {
     phoneDecorator,
     creditCardDecorator,
     imageDecorator,
-    termDecorator
-  } = args
+    termDecorator,
+  } = args;
   if (matches && matches.content && matches.content.length > 0) {
     const elements = map(matches.content, (content, i) => {
-      if (includes(content, 'SHORTCODE:')) {
-        const shortcode = content.replace('SHORTCODE:', '').split(' ')
-        const shortcodeType = shortcode[0]
-        const index = parseInt(replace(shortcode[1], 'key=', ''))
-        const key = `${i}${random(1, 1000000)}`
+      if (includes(content, "SHORTCODE:")) {
+        const shortcode = content.replace("SHORTCODE:", "").split(" ");
+        const shortcodeType = shortcode[0];
+        const index = parseInt(replace(shortcode[1], "key=", ""));
+        const key = `${i}${random(1, 1000000)}`;
         switch (shortcodeType) {
           case ENTITY.URL:
-            if (hasIn(matches, ['urls', index, 'url'])) {
+            if (hasIn(matches, ["urls", index, "url"])) {
               return decoratorWrapper(
                 linkDecorator(
                   matches.urls[index].url,
@@ -45,53 +45,56 @@ const decorator = (matches, args) => {
                   linkTarget
                 ),
                 key
-              )
-              return matches.urls[index].title
+              );
+              return matches.urls[index].title;
             }
-            return
+            return;
           case ENTITY.IMAGE:
-            if (hasIn(matches, ['images', index, 'url'])) {
+            if (hasIn(matches, ["images", index, "url"])) {
               return decoratorWrapper(
                 imageDecorator(matches.images[index].url),
                 key
-              )
+              );
             }
-            if (hasIn(matches, ['images', index, 'title'])) {
-              return decoratorWrapper(matches.images[index].title, key)
+            if (hasIn(matches, ["images", index, "title"])) {
+              return decoratorWrapper(matches.images[index].title, key);
             }
           case ENTITY.CC:
-            if (hasIn(matches, ['cc', index])) {
+            if (hasIn(matches, ["cc", index])) {
               return decoratorWrapper(
                 creditCardDecorator(matches.cc[index]),
                 key
-              )
+              );
             }
-            return
+            return;
           case ENTITY.PHONE:
-            if (hasIn(matches, ['phone', index])) {
-              return decoratorWrapper(phoneDecorator(matches.phone[index]), key)
+            if (hasIn(matches, ["phone", index])) {
+              return decoratorWrapper(
+                phoneDecorator(matches.phone[index]),
+                key
+              );
             }
-            return
+            return;
           case ENTITY.TERM:
-            if (hasIn(matches, ['terms', index])) {
-              return decoratorWrapper(termDecorator(matches.terms[index]), key)
+            if (hasIn(matches, ["terms", index])) {
+              return decoratorWrapper(termDecorator(matches.terms[index]), key);
             }
-            return
+            return;
           case ENTITY.EMAIL:
-            const emailData = matches.emails[index]
-            if (hasIn(matches, ['emails', index])) {
+            const emailData = matches.emails[index];
+            if (hasIn(matches, ["emails", index])) {
               return decoratorWrapper(
                 emailDecorator(emailData.url, emailData.title),
                 key
-              )
+              );
             }
-            return
+            return;
         }
       }
-      return content
-    })
-    return elements
+      return content;
+    });
+    return elements;
   }
-}
+};
 
-export default decorator
+export default decorator;

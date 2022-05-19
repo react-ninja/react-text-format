@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * urlDecorator is the default decorator which is being used for the
@@ -13,12 +13,12 @@ const urlDecorator = (decoratedHref, decoratedText, linkTarget) => {
     <a
       href={decoratedHref}
       target={linkTarget}
-      rel='noopener'
-      className='rtfLink'
+      rel="noopener"
+      className="rtfLink"
     >
       {decoratedText}
     </a>
-  )
-}
+  );
+};
 
-export default urlDecorator
+export default urlDecorator;
