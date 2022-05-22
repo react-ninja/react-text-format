@@ -1,6 +1,6 @@
 {
   "name": "react-text-format",
-  "version": "2.0.26",
+  "version": "2.0.29",
   "description": "React Component to find and parse links, emails, phone numbers, credit cards and keywords to required format.",
   "homepage": "https://react-ninja.github.io/react-text-format/",
   "author": "Ahsan Bilal",
@@ -52,16 +52,19 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.3.6",
     "cross-env": "^5.1.4",
-    "eslint": "^5.0.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-config-standard-react": "^6.0.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-node": "^7.0.1",
-    "eslint-plugin-promise": "^4.0.0",
-    "eslint-plugin-react": "^7.10.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "gh-pages": "^2.0.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "eslint": "^8.16.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard-react": "^11.0.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "gh-pages": "^4.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "^1.1.4",
@@ -71,16 +74,13 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^1.6.2",
-    "rollup-plugin-url": "^1.4.0",
-    "chai": "^4.2.0",
-    "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.7.1"
+    "rollup-plugin-url": "^1.4.0"
   },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "linkify-it": "^2.0.3",
+    "linkify-it": "^4.0.1",
     "lodash": "^4.17.21",
     "react-test-renderer": "^16.5.2"
   }
