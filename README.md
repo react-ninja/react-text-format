@@ -2,9 +2,9 @@
 
 > React Component to find and parse links, emails, phone numbers, image's URL, credit cards and keywords to required format.
 
-[![NPM](https://img.shields.io/npm/v/react-text-format.svg)](https://www.npmjs.com/package/react-text-format) 
+[![NPM](https://img.shields.io/badge/npm-v8.0.0-blue)](https://www.npmjs.com/package/react-text-format) 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) 
-[![Hire me](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin&labelColor=blue)](https://www.linkedin.com/in/ahsanbilal27/) 
+[![Hire me](https://shields.io/badge/LinkedIn-Hire%20me-green?logo=linkedin&style=social)](https://www.linkedin.com/in/ahsanbilal27/) 
 
 
 __[View live demo here](https://react-ninja.github.io/react-text-format/)__
