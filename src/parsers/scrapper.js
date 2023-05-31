@@ -16,8 +16,16 @@ import TermsScrapper from "../parsers/terms/scrapper";
  * @param  {array} termKeywords   terms which needs to find/extract from content
  */
 const scrapeFormats = (allowedFormats, content, termKeywords) => {
+  const _content = content.split(' ').map(seg => {
+    try {
+      decodeURIComponent(seg)
+      return seg
+    } catch (error) {
+      return encodeURIComponent(seg)
+    }
+  }).join(' ')
   const data = {
-    content: decodeURIComponent(content),
+    content: decodeURIComponent(_content),
     urls: [],
     images: [],
     emails: [],
