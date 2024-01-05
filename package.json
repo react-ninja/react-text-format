@@ -1,6 +1,6 @@
 {
   "name": "react-text-format",
-  "version": "2.0.31",
+  "version": "2.0.32",
   "description": "React Component to find and parse links, emails, phone numbers, credit cards and keywords to required format.",
   "homepage": "https://react-ninja.github.io/react-text-format/",
   "author": "Ahsan Bilal",
