@@ -9,6 +9,17 @@ import CreditCardScrapper from "../parsers/creditcards/scrapper";
 import PhoneNumberScrapper from "../parsers/phone/scrapper";
 import TermsScrapper from "../parsers/terms/scrapper";
 
+const sanitizeContent = (value) => {
+    const content = value.split(' ').map(seg => {
+      try {
+        return decodeURIComponent(seg)
+      } catch (error) {
+        return seg
+      }
+    }).join(' ');
+  return content;
+};
+
 /**
  * scrapeFormats function extract all the formats from content
  * @param  {array} allowedFormats formats which are used to extract from content
@@ -16,8 +27,9 @@ import TermsScrapper from "../parsers/terms/scrapper";
  * @param  {array} termKeywords   terms which needs to find/extract from content
  */
 const scrapeFormats = (allowedFormats, content, termKeywords) => {
+
   const data = {
-    content: decodeURIComponent(content),
+    content: sanitizeContent(content),
     urls: [],
     images: [],
     emails: [],
@@ -25,6 +37,7 @@ const scrapeFormats = (allowedFormats, content, termKeywords) => {
     phone: [],
     terms: [],
   };
+  
   const scrappers = [
     {
       id: ENTITY.URL,

@@ -27,6 +27,7 @@ const ReactFormatter = (props) => {
         throw null;
       }
       const matches = scrapper(allowedFormats, string, terms);
+      console.log({ matches });
       return decorator(matches, props);
     } catch (e) {
       logger(e);
